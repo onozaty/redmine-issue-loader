@@ -1,0 +1,24 @@
+{
+  "readmineUrl": "http://192.168.33.10",
+  "apyKey": "20d0779f947c3c9a7248332a078ff458644ed73d",
+  "csvEncoding": "UTF-8",
+  "fields": [
+    {
+      "headerName": "#",
+      "type": "ISSUE_ID",
+      "primaryKey": true
+    },
+    {
+      "headerName": "Field1",
+      "type": "CUSTOM_FIELD",
+      "customFieldId": 1,
+      "primaryKey": false
+    },
+    {
+      "headerName": "Field2",
+      "type": "CUSTOM_FIELD",
+      "customFieldId": 2,
+      "primaryKey": false
+    }
+  ]
+}

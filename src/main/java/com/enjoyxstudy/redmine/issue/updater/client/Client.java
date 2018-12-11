@@ -1,0 +1,87 @@
+package com.enjoyxstudy.redmine.issue.updater.client;
+
+import java.io.IOException;
+import java.util.List;
+
+import com.enjoyxstudy.redmine.issue.updater.Issue;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+
+import lombok.Builder;
+import lombok.Value;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+@Value
+@Builder
+public class Client {
+
+    private final OkHttpClient httpClient = new OkHttpClient();
+
+    private final ObjectMapper objectMapper = new ObjectMapper()
+            .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+
+    private final String redmineBaseUrl;
+
+    private final String apiKey;
+
+    public List<Issue> getIssues(QueryParameter query) throws IOException {
+        return get("issues.json", query, IssuesBody.class).getIssues();
+    }
+
+    public void updateIssue(Issue issue) throws IOException {
+        put("issues/" + issue.getId() + ".json", new IssueBody(issue));
+    }
+
+    private <T> T get(String path, QueryParameter query, Class<T> responseType) throws IOException {
+
+        HttpUrl url = HttpUrl.get(redmineBaseUrl)
+                .resolve(path)
+                .newBuilder()
+                .addQueryParameter(query.getName(), query.getValue())
+                .build();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("X-Redmine-API-Key", apiKey)
+                .build();
+
+        Response response = httpClient.newCall(request).execute();
+
+        if (!response.isSuccessful()) {
+            throw new IOException("Failed to call Redmine API. " + response);
+        }
+
+        return objectMapper.readValue(
+                response.body().string(),
+                responseType);
+    }
+
+    private void put(String path, Object body) throws IOException {
+
+        HttpUrl url = HttpUrl.get(redmineBaseUrl)
+                .resolve(path)
+                .newBuilder()
+                .build();
+
+        RequestBody requestBody = RequestBody.create(
+                MediaType.get("application/json; charset=utf-8"),
+                objectMapper.writeValueAsString(body));
+
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("X-Redmine-API-Key", apiKey)
+                .put(requestBody)
+                .build();
+
+        Response response = httpClient.newCall(request).execute();
+
+        if (!response.isSuccessful()) {
+            throw new IOException("Failed to call Redmine API. " + response);
+        }
+    }
+}

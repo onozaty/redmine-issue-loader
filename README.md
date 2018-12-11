@@ -1,1 +1,1 @@
-# redmine-rest-client
+# redmine-issue-updater
