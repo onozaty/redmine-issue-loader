@@ -12,6 +12,7 @@ public class IssueUpdateRunnerTest {
     @Test
     public void test1() throws URISyntaxException, IOException {
 
+        // 動作確認用(キーがチケットID)
         Path configPath = Paths.get(IssueUpdateRunnerTest.class.getResource("config1.json").toURI());
         Path csvPath = Paths.get(IssueUpdateRunnerTest.class.getResource("issues.csv").toURI());
 
@@ -22,6 +23,7 @@ public class IssueUpdateRunnerTest {
     @Test
     public void test2() throws URISyntaxException, IOException {
 
+        // 動作確認用(キーがカスタムフィールド)
         Path configPath = Paths.get(IssueUpdateRunnerTest.class.getResource("config2.json").toURI());
         Path csvPath = Paths.get(IssueUpdateRunnerTest.class.getResource("issues.csv").toURI());
 
