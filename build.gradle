@@ -25,7 +25,7 @@ dependencies {
     testCompile group: 'org.assertj', name: 'assertj-core', version: '3.9.1'
 }
 
-def mainClassName = 'com.enjoyxstudy.filesearch.FileCollector'
+def mainClassName = 'com.enjoyxstudy.redmine.issue.updater.IssueUpdateRunner'
 
 jar {
     manifest { attributes 'Main-Class' : mainClassName }

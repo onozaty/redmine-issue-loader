@@ -7,6 +7,7 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -23,9 +24,28 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class IssueUpdateRunner {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     private PrintStream out;
+
+    public static void main(String[] args) throws IOException {
+
+        if (args.length != 2) {
+            System.err.println("usage: java -jar redmine-issue-updater-all.jar <config file> <csv file>");
+            System.exit(1);
+        }
+
+        Path configPath = Paths.get(args[0]);
+        Path csvPath = Paths.get(args[1]);
+
+        System.out.println("Processing start...");
+
+        IssueUpdateRunner issueUpdateRunner = new IssueUpdateRunner(System.out);
+        int updatedCount = issueUpdateRunner.execute(configPath, csvPath);
+
+        System.out.println(
+                String.format("Processing is completed. %d issues were updated.", updatedCount));
+    }
 
     public int execute(Path configPath, Path csvPath) throws IOException {
 
