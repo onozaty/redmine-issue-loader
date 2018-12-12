@@ -57,9 +57,9 @@ public class IssueUpdateRunner {
 
         // 1件ではない場合はエラー
         if (primaryKeyCount == 0) {
-            throw new IllegalStateException("Primary key was not found.");
+            throw new IllegalArgumentException("Primary key was not found.");
         } else if (primaryKeyCount > 1) {
-            throw new IllegalStateException("There are multiple primary keys.");
+            throw new IllegalArgumentException("There are multiple primary keys.");
         }
 
         Client client = Client.builder()
