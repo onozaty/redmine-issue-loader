@@ -11,6 +11,8 @@ tasks.withType(AbstractCompile)*.options*.encoding = defaultEncoding
 
 repositories { jcenter() }
 
+version = '1.0.0'
+
 dependencies {
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
@@ -28,5 +30,5 @@ dependencies {
 def mainClassName = 'com.enjoyxstudy.redmine.issue.updater.IssueUpdateRunner'
 
 jar {
-    manifest { attributes 'Main-Class' : mainClassName }
+    manifest { attributes('Main-Class' : mainClassName, "Implementation-Version": version) }
 }
