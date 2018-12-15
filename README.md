@@ -19,7 +19,7 @@ gradlew shadowJar
 Execute the application with the following command.
 
 ```
-java -jar build/libs/redmine-issue-updater-all.jar config.json issues.csv
+java -jar build/libs/redmine-issue-updater-1.0.0-all.jar config.json issues.csv
 ```
 
 The first argument is the configuration file. The second argument will be the CSV file with the Issue to be updated.

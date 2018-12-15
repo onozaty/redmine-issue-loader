@@ -19,7 +19,7 @@ gradlew shadowJar
 下記のコマンドで、アプリケーションを実行します。
 
 ```
-java -jar build/libs/redmine-issue-updater-all.jar config.json issues.csv
+java -jar build/libs/redmine-issue-updater-1.0.0-all.jar config.json issues.csv
 ```
 
 第1引数が設定ファイル、第2引数が更新する情報が書かれたCSVファイルとなります。
