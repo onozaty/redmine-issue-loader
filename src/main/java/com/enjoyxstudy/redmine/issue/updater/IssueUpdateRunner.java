@@ -80,7 +80,7 @@ public class IssueUpdateRunner {
 
                 IssueRecord issueRecord = toIssueRecord(csvRecord, config);
 
-                IssueId issueId = updater.update(issueRecord.getPrimaryKey(), issueRecord.getIssue());
+                IssueId issueId = updater.update(issueRecord.getPrimaryKey(), issueRecord.getUpdateTargetFields());
                 println(String.format("#%d is updated.", issueId.getId()));
 
                 updatedCount++;
@@ -93,7 +93,7 @@ public class IssueUpdateRunner {
     private IssueRecord toIssueRecord(CSVRecord csvRecord, Config config) {
 
         PrimaryKey primaryKey = null;
-        Issue.IssueBuilder issueBuilder = Issue.builder();
+        IssueUpdateTargetFieldsBuilder updateTargetFieldsBuilder = new IssueUpdateTargetFieldsBuilder();
 
         for (FieldSetting fieldSetting : config.getFields()) {
 
@@ -117,7 +117,7 @@ public class IssueUpdateRunner {
                     if (fieldSetting.isPrimaryKey()) {
                         primaryKey = customField;
                     } else {
-                        issueBuilder.customField(customField);
+                        updateTargetFieldsBuilder.customField(customField);
                     }
 
                     break;
@@ -127,7 +127,7 @@ public class IssueUpdateRunner {
             }
         }
 
-        return new IssueRecord(primaryKey, issueBuilder.build());
+        return new IssueRecord(primaryKey, updateTargetFieldsBuilder.build());
     }
 
     private void println(String message) {

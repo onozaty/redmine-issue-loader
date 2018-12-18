@@ -21,7 +21,7 @@ public class IssueUpdaterTest {
 
         updater.update(
                 new CustomField(1, "C"),
-                Issue.builder()
+                new IssueUpdateTargetFieldsBuilder()
                         .customField(new CustomField(2, "xxx"))
                         .customField(new CustomField(3, "yyy"))
                         .build());

@@ -2,6 +2,7 @@ package com.enjoyxstudy.redmine.issue.updater;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import com.enjoyxstudy.redmine.issue.updater.client.Client;
 
@@ -12,7 +13,7 @@ public class IssueUpdater {
 
     private final Client client;
 
-    public IssueId update(PrimaryKey key, Issue issue) throws IOException {
+    public IssueId update(PrimaryKey key, Map<String, Object> updateTargetFields) throws IOException {
 
         // キーとなる情報を使ってIssueを検索
         List<Issue> targetIssues = client.getIssues(key.getQueryParameter());
@@ -25,10 +26,9 @@ public class IssueUpdater {
         }
 
         int targetIssueId = targetIssues.get(0).getId();
-        issue.setId(targetIssueId);
 
         // 内容更新
-        client.updateIssue(issue);
+        client.updateIssue(targetIssueId, updateTargetFields);
 
         // 更新対象となったIssueIdを返却
         return new IssueId(targetIssueId);

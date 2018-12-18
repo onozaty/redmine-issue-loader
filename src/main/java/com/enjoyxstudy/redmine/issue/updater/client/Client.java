@@ -2,6 +2,7 @@ package com.enjoyxstudy.redmine.issue.updater.client;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import com.enjoyxstudy.redmine.issue.updater.Issue;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,8 +34,8 @@ public class Client {
         return get("issues.json", query, IssuesBody.class).getIssues();
     }
 
-    public void updateIssue(Issue issue) throws IOException {
-        put("issues/" + issue.getId() + ".json", new IssueBody(issue));
+    public void updateIssue(int issueId, Map<String, Object> updateTargetFields) throws IOException {
+        put("issues/" + issueId + ".json", new IssueBody(updateTargetFields));
     }
 
     private <T> T get(String path, QueryParameter query, Class<T> responseType) throws IOException {
