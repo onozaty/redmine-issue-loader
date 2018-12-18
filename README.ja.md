@@ -68,11 +68,11 @@ Processing is completed. 3 issues were updated.
 * `readmineUrl` : Redmineの接続先URL。
 * `apyKey` : RedmineのAPIアクセスキー。
 * `csvEncoding` : CSVファイルのエンコーディング。
-* `fields` : CSVの各フィールド情報。CSV内の全てのフィールドを記載する必要は無く、利用するものだけ書いてあれば良い。
+* `fields` : CSVの各フィールド情報。CSV内の全てのフィールドを記載するのではなく、キーとして使用するものと、更新対象のフィールドを記載する。
     * `headerName` : CSV内のヘッダ名。
     * `type` : 種別。(`ISSUE_ID` または `CUSTOM_FIELD`)
-    * `customFieldId` : カスタムフィールドのID。種別が`CUSTOM_FIELD`の場合に設定します。
-    * `primaryKey` : プライマリーキーか。`true`となっているフィールドの情報を使って、更新対象のチケットを検索。
+    * `customFieldId` : カスタムフィールドのID。種別が`CUSTOM_FIELD`の場合に設定する。
+    * `primaryKey` : プライマリーキーか。`true`となっているフィールドの情報を使って更新対象のチケットを検索し、`false`となっているフィールドが更新されることとなる。
 
 カスタムフィールドのIDは、管理者画面のカスタムフィールドの設定画面で、対象のカスタムフィールドを選択した際のURLで確認できます。
 以下のような場合、カスタムフィールドのIDは`1`となります。

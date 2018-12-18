@@ -68,11 +68,11 @@ The contents of each item are as follows.
 * `readmineUrl` : Redmine's URL.
 * `apyKey` : Redmine API access key.
 * `csvEncoding` : CSV file encoding.
-* `fields` : CSV field information. It is not necessary to write all the CSV fields, and it is only necessary to write what to use.
+* `fields` : CSV field information. It is not necessary to write all the CSV fields. Write what you use as the key and the field to update.
     * `headerName` : Header name in CSV.
     * `type` : Type. (`ISSUE_ID` or `CUSTOM_FIELD`)
     * `customFieldId`
-    * `primaryKey` : Primary key? Search for issues to be updated using the information of the field set to `true`.
+    * `primaryKey` : Primary key? Search for issues to be updated using the information of the field set to `true`, and the field` false` will be updated.
 
 The ID of the custom field can be confirmed by the URL of the custom field setting screen.
 In the following cases, the ID of the custom field is `1`.
