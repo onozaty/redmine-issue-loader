@@ -1,5 +1,7 @@
 package com.enjoyxstudy.redmine.issue.updater;
 
+import java.util.Map;
+
 import lombok.Data;
 
 @Data
@@ -12,4 +14,6 @@ public class FieldSetting {
     private Integer customFieldId;
 
     private boolean isPrimaryKey;
+    
+    private Map<String, String> mappings;
 }

@@ -9,6 +9,12 @@ public class IssueUpdateTargetFieldsBuilder {
 
     private Map<String, Object> updateTargetFields = new HashMap<>();
 
+    public IssueUpdateTargetFieldsBuilder field(FieldType type, String value) {
+
+        updateTargetFields.put(type.getFieldName(), value);
+        return this;
+    }
+
     public IssueUpdateTargetFieldsBuilder customField(CustomField customField) {
 
         @SuppressWarnings("unchecked")

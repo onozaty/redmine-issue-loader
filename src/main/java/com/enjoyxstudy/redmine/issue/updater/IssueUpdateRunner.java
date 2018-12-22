@@ -62,6 +62,12 @@ public class IssueUpdateRunner {
             throw new IllegalArgumentException("There are multiple primary keys.");
         }
 
+        if (config.getFields().size() == 1) {
+            // Primary keyしかない
+            // -> 更新対象のフィールドが無い
+            throw new IllegalArgumentException("The field to be updated is not set.");
+        }
+
         Client client = Client.builder()
                 .redmineBaseUrl(config.getReadmineUrl())
                 .apiKey(config.getApyKey())
@@ -97,9 +103,10 @@ public class IssueUpdateRunner {
 
         for (FieldSetting fieldSetting : config.getFields()) {
 
-            String value = csvRecord.get(fieldSetting.getHeaderName());
+            String value = convertValue(csvRecord.get(fieldSetting.getHeaderName()), fieldSetting);
 
-            switch (fieldSetting.getType()) {
+            FieldType fieldType = fieldSetting.getType();
+            switch (fieldType) {
                 case ISSUE_ID:
 
                     if (!fieldSetting.isPrimaryKey()) {
@@ -123,11 +130,40 @@ public class IssueUpdateRunner {
                     break;
 
                 default:
+                    // その他の項目は更新対象フィールドとして利用
+
+                    if (fieldSetting.isPrimaryKey()) {
+                        // PKとしては使えない
+                        throw new IllegalArgumentException("Field " + fieldType + " can not be used as a primary key.");
+                    }
+
+                    updateTargetFieldsBuilder.field(fieldType, value);
                     break;
             }
         }
 
         return new IssueRecord(primaryKey, updateTargetFieldsBuilder.build());
+    }
+
+    private String convertValue(String value, FieldSetting fieldSetting) {
+
+        if (value.isEmpty() || fieldSetting.getMappings() == null) {
+            return value;
+        }
+
+        // 変換表がある場合、CSVから取り出した値を変換
+        String convertedValue = fieldSetting.getMappings().get(value);
+
+        if (convertedValue == null) {
+            // 一致するものが無い場合エラー
+            throw new IllegalArgumentException(
+                    String.format(
+                            "Could not mapping %s of field %s.",
+                            value,
+                            fieldSetting.getHeaderName()));
+        }
+
+        return convertedValue;
     }
 
     private void println(String message) {
