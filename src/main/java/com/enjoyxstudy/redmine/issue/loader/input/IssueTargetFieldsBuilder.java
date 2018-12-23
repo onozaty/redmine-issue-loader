@@ -1,21 +1,21 @@
-package com.enjoyxstudy.redmine.issue.updater;
+package com.enjoyxstudy.redmine.issue.loader.input;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class IssueUpdateTargetFieldsBuilder {
+public class IssueTargetFieldsBuilder {
 
     private Map<String, Object> updateTargetFields = new HashMap<>();
 
-    public IssueUpdateTargetFieldsBuilder field(FieldType type, String value) {
+    public IssueTargetFieldsBuilder field(FieldType type, String value) {
 
         updateTargetFields.put(type.getFieldName(), value);
         return this;
     }
 
-    public IssueUpdateTargetFieldsBuilder customField(CustomField customField) {
+    public IssueTargetFieldsBuilder customField(CustomField customField) {
 
         @SuppressWarnings("unchecked")
         List<CustomField> customFields = (List<CustomField>) updateTargetFields.get("custom_fields");

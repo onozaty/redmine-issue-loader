@@ -1,4 +1,4 @@
-package com.enjoyxstudy.redmine.issue.updater;
+package com.enjoyxstudy.redmine.issue.loader.input;
 
 import java.util.Map;
 
@@ -11,5 +11,5 @@ public class IssueRecord {
 
     private PrimaryKey primaryKey;
 
-    private Map<String, Object> updateTargetFields;
+    private Map<String, Object> fields;
 }

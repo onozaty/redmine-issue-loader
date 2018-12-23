@@ -1,4 +1,4 @@
-package com.enjoyxstudy.redmine.issue.updater;
+package com.enjoyxstudy.redmine.issue.loader;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -6,6 +6,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.junit.Test;
+
+import com.enjoyxstudy.redmine.issue.loader.IssueUpdateRunner;
 
 public class IssueUpdateRunnerTest {
 

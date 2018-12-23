@@ -1,4 +1,4 @@
-package com.enjoyxstudy.redmine.issue.updater.client;
+package com.enjoyxstudy.redmine.issue.loader.client;
 
 import java.util.Map;
 

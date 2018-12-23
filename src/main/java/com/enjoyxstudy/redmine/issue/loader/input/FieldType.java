@@ -1,4 +1,4 @@
-package com.enjoyxstudy.redmine.issue.updater;
+package com.enjoyxstudy.redmine.issue.loader.input;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,10 +1,9 @@
-package com.enjoyxstudy.redmine.issue.updater.client;
+package com.enjoyxstudy.redmine.issue.loader.client;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import com.enjoyxstudy.redmine.issue.updater.Issue;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 

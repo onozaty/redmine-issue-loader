@@ -1,6 +1,6 @@
-package com.enjoyxstudy.redmine.issue.updater;
+package com.enjoyxstudy.redmine.issue.loader.input;
 
-import com.enjoyxstudy.redmine.issue.updater.client.QueryParameter;
+import com.enjoyxstudy.redmine.issue.loader.client.QueryParameter;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

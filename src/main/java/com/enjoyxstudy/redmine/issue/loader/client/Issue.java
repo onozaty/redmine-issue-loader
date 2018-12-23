@@ -1,7 +1,8 @@
-package com.enjoyxstudy.redmine.issue.updater;
+package com.enjoyxstudy.redmine.issue.loader.client;
 
 import java.util.List;
 
+import com.enjoyxstudy.redmine.issue.loader.input.CustomField;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;

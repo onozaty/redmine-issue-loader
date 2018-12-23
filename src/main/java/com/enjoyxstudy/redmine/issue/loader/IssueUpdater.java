@@ -1,10 +1,13 @@
-package com.enjoyxstudy.redmine.issue.updater;
+package com.enjoyxstudy.redmine.issue.loader;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import com.enjoyxstudy.redmine.issue.updater.client.Client;
+import com.enjoyxstudy.redmine.issue.loader.client.Client;
+import com.enjoyxstudy.redmine.issue.loader.client.Issue;
+import com.enjoyxstudy.redmine.issue.loader.input.IssueId;
+import com.enjoyxstudy.redmine.issue.loader.input.PrimaryKey;
 
 import lombok.Value;
 

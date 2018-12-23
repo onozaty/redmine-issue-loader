@@ -1,8 +1,7 @@
-package com.enjoyxstudy.redmine.issue.updater.client;
+package com.enjoyxstudy.redmine.issue.loader.client;
 
 import java.util.List;
 
-import com.enjoyxstudy.redmine.issue.updater.Issue;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;

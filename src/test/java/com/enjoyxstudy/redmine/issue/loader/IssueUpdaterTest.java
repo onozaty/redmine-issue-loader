@@ -1,10 +1,13 @@
-package com.enjoyxstudy.redmine.issue.updater;
+package com.enjoyxstudy.redmine.issue.loader;
 
 import java.io.IOException;
 
 import org.junit.Test;
 
-import com.enjoyxstudy.redmine.issue.updater.client.Client;
+import com.enjoyxstudy.redmine.issue.loader.IssueUpdater;
+import com.enjoyxstudy.redmine.issue.loader.client.Client;
+import com.enjoyxstudy.redmine.issue.loader.input.CustomField;
+import com.enjoyxstudy.redmine.issue.loader.input.IssueTargetFieldsBuilder;
 
 public class IssueUpdaterTest {
 
@@ -21,7 +24,7 @@ public class IssueUpdaterTest {
 
         updater.update(
                 new CustomField(1, "C"),
-                new IssueUpdateTargetFieldsBuilder()
+                new IssueTargetFieldsBuilder()
                         .customField(new CustomField(2, "xxx"))
                         .customField(new CustomField(3, "yyy"))
                         .build());
