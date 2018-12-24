@@ -1,0 +1,18 @@
+{
+  "readmineUrl": "http://localhost",
+  "apyKey": "apikey1234567890",
+  "csvEncoding": "UTF-8",
+  "fields": [
+    {
+      "headerName": "Field1",
+      "type": "CUSTOM_FIELD",
+      "customFieldId": 1,
+      "primaryKey": true
+    },
+    {
+      "headerName": "Status Id",
+      "type": "STATUS_ID",
+      "primaryKey": false
+    }
+  ]
+}

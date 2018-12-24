@@ -1,13 +1,13 @@
 package com.enjoyxstudy.redmine.issue.loader.input;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class IssueTargetFieldsBuilder {
 
-    private Map<String, Object> updateTargetFields = new HashMap<>();
+    private Map<String, Object> updateTargetFields = new LinkedHashMap<>(); // テスト時に順序を保証したいので
 
     public IssueTargetFieldsBuilder field(FieldType type, String value) {
 

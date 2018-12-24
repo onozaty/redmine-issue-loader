@@ -1,6 +1,6 @@
 {
-  "readmineUrl": "http://192.168.33.10",
-  "apyKey": "20d0779f947c3c9a7248332a078ff458644ed73d",
+  "readmineUrl": "http://localhost",
+  "apyKey": "apikey1234567890",
   "csvEncoding": "UTF-8",
   "fields": [
     {

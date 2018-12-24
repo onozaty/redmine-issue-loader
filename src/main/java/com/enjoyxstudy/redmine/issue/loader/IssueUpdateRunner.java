@@ -44,6 +44,11 @@ public class IssueUpdateRunner {
 
         Config config = Config.of(configPath);
 
+        return execute(config, csvPath);
+    }
+
+    public int execute(Config config, Path csvPath) throws IOException {
+
         long primaryKeyCount = config.getFields().stream()
                 .filter(FieldSetting::isPrimaryKey)
                 .count();
