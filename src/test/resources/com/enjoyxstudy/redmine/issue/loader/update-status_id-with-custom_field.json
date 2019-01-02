@@ -1,4 +1,5 @@
 {
+  "mode": "UPDATE",
   "readmineUrl": "http://localhost",
   "apyKey": "apikey1234567890",
   "csvEncoding": "UTF-8",

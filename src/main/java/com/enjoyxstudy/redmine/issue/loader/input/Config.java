@@ -9,18 +9,26 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.Data;
+import lombok.NonNull;
 
 @Data
 public class Config {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
+    @NonNull
+    private LoadMode mode;
+    
+    @NonNull
     private String readmineUrl;
 
+    @NonNull
     private String apyKey;
 
+    @NonNull
     private String csvEncoding;
 
+    @NonNull
     private List<FieldSetting> fields;
 
     public static Config of(Path configPath) throws JsonParseException, JsonMappingException, IOException {

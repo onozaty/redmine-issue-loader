@@ -33,8 +33,12 @@ public class Client {
         return get("issues.json", query, IssuesBody.class).getIssues();
     }
 
-    public void updateIssue(int issueId, Map<String, Object> updateTargetFields) throws IOException {
-        put("issues/" + issueId + ".json", new IssueBody(updateTargetFields));
+    public int createIssue(Map<String, Object> targetFields) throws IOException {
+        return (int) post("issues.json", new IssueBody(targetFields), IssueBody.class).getFields().get("id");
+    }
+
+    public void updateIssue(int issueId, Map<String, Object> targetFields) throws IOException {
+        put("issues/" + issueId + ".json", new IssueBody(targetFields));
     }
 
     private <T> T get(String path, QueryParameter query, Class<T> responseType) throws IOException {
@@ -48,6 +52,34 @@ public class Client {
         Request request = new Request.Builder()
                 .url(url)
                 .addHeader("X-Redmine-API-Key", apiKey)
+                .build();
+
+        Response response = httpClient.newCall(request).execute();
+
+        if (!response.isSuccessful()) {
+            throw new IOException("Failed to call Redmine API. " + response);
+        }
+
+        return objectMapper.readValue(
+                response.body().string(),
+                responseType);
+    }
+
+    private <T> T post(String path, Object body, Class<T> responseType) throws IOException {
+
+        HttpUrl url = HttpUrl.get(redmineBaseUrl)
+                .resolve(path)
+                .newBuilder()
+                .build();
+
+        RequestBody requestBody = RequestBody.create(
+                MediaType.get("application/json; charset=utf-8"),
+                objectMapper.writeValueAsString(body));
+
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("X-Redmine-API-Key", apiKey)
+                .post(requestBody)
                 .build();
 
         Response response = httpClient.newCall(request).execute();

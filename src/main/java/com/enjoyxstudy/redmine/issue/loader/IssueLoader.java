@@ -12,11 +12,19 @@ import com.enjoyxstudy.redmine.issue.loader.input.PrimaryKey;
 import lombok.Value;
 
 @Value
-public class IssueUpdater {
+public class IssueLoader {
 
     private final Client client;
 
-    public IssueId update(PrimaryKey key, Map<String, Object> updateTargetFields) throws IOException {
+    public IssueId create(Map<String, Object> targetFields) throws IOException {
+
+        // 新規作成
+        int issueId = client.createIssue(targetFields);
+
+        return new IssueId(issueId);
+    }
+
+    public IssueId update(PrimaryKey key, Map<String, Object> targetFields) throws IOException {
 
         // キーとなる情報を使ってIssueを検索
         List<Issue> targetIssues = client.getIssues(key.getQueryParameter());
@@ -31,7 +39,7 @@ public class IssueUpdater {
         int targetIssueId = targetIssues.get(0).getId();
 
         // 内容更新
-        client.updateIssue(targetIssueId, updateTargetFields);
+        client.updateIssue(targetIssueId, targetFields);
 
         // 更新対象となったIssueIdを返却
         return new IssueId(targetIssueId);
