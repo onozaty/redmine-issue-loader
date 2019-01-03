@@ -1,0 +1,25 @@
+{
+  "mode": "UPDATE",
+  "readmineUrl": "http://localhost",
+  "apyKey": "apikey1234567890",
+  "csvEncoding": "UTF-8",
+  "fields": [
+    {
+      "headerName": "#",
+      "type": "ISSUE_ID",
+      "primaryKey": false
+    },
+   {
+      "headerName": "Field1",
+      "type": "CUSTOM_FIELD",
+      "customFieldId": 1,
+      "primaryKey": true
+    },
+    {
+      "headerName": "Field2",
+      "type": "CUSTOM_FIELD",
+      "customFieldId": 2,
+      "primaryKey": false
+    }
+  ]
+}

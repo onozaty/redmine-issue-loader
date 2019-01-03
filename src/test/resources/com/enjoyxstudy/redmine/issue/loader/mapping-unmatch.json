@@ -1,0 +1,21 @@
+{
+  "mode": "UPDATE",
+  "readmineUrl": "http://localhost",
+  "apyKey": "apikey1234567890",
+  "csvEncoding": "UTF-8",
+  "fields": [
+    {
+      "headerName": "#",
+      "type": "ISSUE_ID",
+      "primaryKey": true
+    },
+    {
+      "headerName": "Project",
+      "type": "PROJECT_ID",
+      "primaryKey": false,
+      "mappings" : {
+        "プロジェクトx" : 1,
+        "プロジェクトy" : 2
+      }
+    }]
+}

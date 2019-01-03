@@ -77,11 +77,6 @@ public class IssueRecords implements Iterable<IssueRecord>, Closeable {
             switch (fieldType) {
                 case ISSUE_ID:
 
-                    if (!fieldSetting.isPrimaryKey()) {
-                        // チケットIDはPKとしてしか使えないので
-                        throw new IllegalArgumentException("Issue ID can only be used as a primary key.");
-                    }
-
                     primaryKey = new IssueId(Integer.parseInt(value));
                     break;
 
@@ -99,12 +94,6 @@ public class IssueRecords implements Iterable<IssueRecord>, Closeable {
 
                 default:
                     // その他の項目は更新対象フィールドとして利用
-
-                    if (fieldSetting.isPrimaryKey()) {
-                        // PKとしては使えない
-                        throw new IllegalArgumentException("Field " + fieldType + " can not be used as a primary key.");
-                    }
-
                     targetFieldsBuilder.field(fieldType, value);
                     break;
             }
@@ -126,7 +115,7 @@ public class IssueRecords implements Iterable<IssueRecord>, Closeable {
             // 一致するものが無い場合エラー
             throw new IllegalArgumentException(
                     String.format(
-                            "Could not mapping %s of field %s.",
+                            "Could not mapping \"%s\" of field [%s].",
                             value,
                             fieldSetting.getHeaderName()));
         }

@@ -1,0 +1,88 @@
+{
+  "mode": "UPDATE",
+  "readmineUrl": "http://localhost",
+  "apyKey": "apikey1234567890",
+  "csvEncoding": "UTF-8",
+  "fields": [
+    {
+      "headerName": "#",
+      "type": "ISSUE_ID",
+      "primaryKey": true
+    },
+    {
+      "headerName": "Project",
+      "type": "PROJECT_ID",
+      "primaryKey": false,
+      "mappings" : {
+        "プロジェクト1" : 1,
+        "プロジェクト2" : 2
+      }
+    },
+    {
+      "headerName": "Tracker",
+      "type": "TRACKER_ID",
+      "primaryKey": false,
+      "mappings" : {
+        "トラッカー1" : 1,
+        "トラッカー2" : 2,
+        "トラッカー3" : 3
+      }
+    },
+    {
+      "headerName": "Status",
+      "type": "STATUS_ID",
+      "primaryKey": false,
+      "mappings" : {
+        "新規" : 1,
+        "進行中" : 2,
+        "解決" : 3
+      }
+    },
+    {
+      "headerName": "Priority",
+      "type": "PRIORITY_ID",
+      "primaryKey": false,
+      "mappings" : {
+        "低め" : 1,
+        "通常" : 2,
+        "高め" : 3
+      }
+    },
+    {
+      "headerName": "Subject",
+      "type": "SUBJECT",
+      "primaryKey": false
+    },
+    {
+      "headerName": "Description",
+      "type": "DESCRIPTION",
+      "primaryKey": false
+    },
+    {
+      "headerName": "Category",
+      "type": "CATEGORY_ID",
+      "primaryKey": false,
+      "mappings" : {
+        "カテゴリ1" : 1,
+        "カテゴリ2" : 2
+      }
+    },
+    {
+      "headerName": "Parent #",
+      "type": "PARENT_ISSUE_ID",
+      "primaryKey": false
+    },
+    {
+      "headerName": "Field1",
+      "type": "CUSTOM_FIELD",
+      "customFieldId": 1,
+      "primaryKey": false
+    },
+    {
+      "headerName": "Field2",
+      "type": "CUSTOM_FIELD",
+      "customFieldId": 2,
+      "primaryKey": true
+    }
+  ]
+}

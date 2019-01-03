@@ -98,7 +98,7 @@ public class IssueLoadRunner {
                     .filter(FieldSetting::isPrimaryKey)
                     .count();
 
-            // 1件ではない場合はエラー
+            // プライマリーキーが1件ではない場合はエラー
             if (primaryKeyCount == 0) {
                 throw new IllegalArgumentException("Primary key was not found.");
             } else if (primaryKeyCount > 1) {
@@ -106,9 +106,28 @@ public class IssueLoadRunner {
             }
 
             if (config.getFields().size() == 1) {
-                // Primary keyしかない
+                // プライマリーキーしかない
                 // -> 更新対象のフィールドが無い
                 throw new IllegalArgumentException("The field to be updated is not set.");
+            }
+
+            if (config.getFields().stream()
+                    .anyMatch(x -> x.getType() == FieldType.ISSUE_ID && !x.isPrimaryKey())) {
+                // チケットIDがプライマリキー以外で指定
+                throw new IllegalArgumentException("Issue ID can only be used as a primary key.");
+            }
+
+            FieldType primaryKeyFieldType = config.getFields().stream()
+                    .filter(FieldSetting::isPrimaryKey)
+                    .map(FieldSetting::getType)
+                    .findFirst()
+                    .get();
+
+            if (primaryKeyFieldType != FieldType.ISSUE_ID
+                    && primaryKeyFieldType != FieldType.CUSTOM_FIELD) {
+                // チケットIDとカスタムフィールド以外はプライマリキーとして使用不可
+                throw new IllegalArgumentException(
+                        "Field type [" + primaryKeyFieldType + "] can not be used as a primary key.");
             }
         }
     }

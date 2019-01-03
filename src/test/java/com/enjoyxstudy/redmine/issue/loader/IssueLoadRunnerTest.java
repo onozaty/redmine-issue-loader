@@ -1,6 +1,7 @@
 package com.enjoyxstudy.redmine.issue.loader;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -36,7 +37,7 @@ public class IssueLoadRunnerTest {
 
             Path csvPath = Paths.get(IssueLoadRunnerTest.class.getResource("issues-all_fields.csv").toURI());
 
-            IssueLoadRunner runner = new IssueLoadRunner();
+            IssueLoadRunner runner = new IssueLoadRunner(System.out);
             runner.execute(config, csvPath);
 
             assertThat(server.getRequestCount()).isEqualTo(3);
@@ -84,7 +85,8 @@ public class IssueLoadRunnerTest {
 
             server.start();
 
-            Path configPath = Paths.get(IssueLoadRunnerTest.class.getResource("create-project_id-subject.json").toURI());
+            Path configPath = Paths
+                    .get(IssueLoadRunnerTest.class.getResource("create-project_id-subject.json").toURI());
             Config config = Config.of(configPath);
 
             // Mockに対してリクエスト送信するよう設定
@@ -94,7 +96,7 @@ public class IssueLoadRunnerTest {
 
             IssueLoadRunner runner = new IssueLoadRunner();
             runner.execute(config, csvPath);
-            
+
             assertThat(server.getRequestCount()).isEqualTo(2);
 
             // 1レコード目
@@ -269,6 +271,158 @@ public class IssueLoadRunnerTest {
                 assertThat(request.getPath()).isEqualTo("/issues/3.json");
                 assertThat(request.getBody().readUtf8()).isEqualTo("{\"issue\":{\"status_id\":\"3\"}}");
             }
+        }
+    }
+
+    @Test
+    public void execute_新規作成_プロジェクトIDなし() throws URISyntaxException, IOException, InterruptedException {
+
+        try (MockWebServer server = new MockWebServer()) {
+
+            Path configPath = Paths.get(IssueLoadRunnerTest.class.getResource("create-none-project_id.json").toURI());
+            Config config = Config.of(configPath);
+
+            Path csvPath = Paths.get(IssueLoadRunnerTest.class.getResource("issues-all_fields.csv").toURI());
+
+            IssueLoadRunner runner = new IssueLoadRunner();
+
+            // 例外がスローされることを確認
+            assertThatThrownBy(() -> runner.execute(config, csvPath))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("Project ID and Subject are required when created.");
+        }
+    }
+
+    @Test
+    public void execute_新規作成_題名無し() throws URISyntaxException, IOException, InterruptedException {
+
+        try (MockWebServer server = new MockWebServer()) {
+
+            Path configPath = Paths.get(IssueLoadRunnerTest.class.getResource("create-none-subject.json").toURI());
+            Config config = Config.of(configPath);
+
+            Path csvPath = Paths.get(IssueLoadRunnerTest.class.getResource("issues-all_fields.csv").toURI());
+
+            IssueLoadRunner runner = new IssueLoadRunner();
+
+            // 例外がスローされることを確認
+            assertThatThrownBy(() -> runner.execute(config, csvPath))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("Project ID and Subject are required when created.");
+        }
+    }
+
+    @Test
+    public void execute_更新_PK無し() throws URISyntaxException, IOException, InterruptedException {
+
+        try (MockWebServer server = new MockWebServer()) {
+
+            Path configPath = Paths.get(IssueLoadRunnerTest.class.getResource("update-none-pk.json").toURI());
+            Config config = Config.of(configPath);
+
+            Path csvPath = Paths.get(IssueLoadRunnerTest.class.getResource("issues-all_fields.csv").toURI());
+
+            IssueLoadRunner runner = new IssueLoadRunner();
+
+            // 例外がスローされることを確認
+            assertThatThrownBy(() -> runner.execute(config, csvPath))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("Primary key was not found.");
+        }
+    }
+
+    @Test
+    public void execute_更新_PK複数() throws URISyntaxException, IOException, InterruptedException {
+
+        try (MockWebServer server = new MockWebServer()) {
+
+            Path configPath = Paths.get(IssueLoadRunnerTest.class.getResource("update-multi-pk.json").toURI());
+            Config config = Config.of(configPath);
+
+            Path csvPath = Paths.get(IssueLoadRunnerTest.class.getResource("issues-all_fields.csv").toURI());
+
+            IssueLoadRunner runner = new IssueLoadRunner();
+
+            // 例外がスローされることを確認
+            assertThatThrownBy(() -> runner.execute(config, csvPath))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("There are multiple primary keys.");
+        }
+    }
+
+    @Test
+    public void execute_更新_PK以外のフィールド指定無し() throws URISyntaxException, IOException, InterruptedException {
+
+        try (MockWebServer server = new MockWebServer()) {
+
+            Path configPath = Paths.get(IssueLoadRunnerTest.class.getResource("update-pk-only.json").toURI());
+            Config config = Config.of(configPath);
+
+            Path csvPath = Paths.get(IssueLoadRunnerTest.class.getResource("issues-all_fields.csv").toURI());
+
+            IssueLoadRunner runner = new IssueLoadRunner();
+
+            // 例外がスローされることを確認
+            assertThatThrownBy(() -> runner.execute(config, csvPath))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("The field to be updated is not set.");
+        }
+    }
+
+    @Test
+    public void execute_更新_チケットIDを更新() throws URISyntaxException, IOException, InterruptedException {
+
+        try (MockWebServer server = new MockWebServer()) {
+
+            Path configPath = Paths.get(IssueLoadRunnerTest.class.getResource("update-issue_id.json").toURI());
+            Config config = Config.of(configPath);
+
+            Path csvPath = Paths.get(IssueLoadRunnerTest.class.getResource("issues-all_fields.csv").toURI());
+
+            IssueLoadRunner runner = new IssueLoadRunner();
+
+            // 例外がスローされることを確認
+            assertThatThrownBy(() -> runner.execute(config, csvPath))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("Issue ID can only be used as a primary key.");
+        }
+    }
+
+    @Test
+    public void execute_更新_PKとしてチケットIDとカスタムフィールド以外指定() throws URISyntaxException, IOException, InterruptedException {
+
+        try (MockWebServer server = new MockWebServer()) {
+
+            Path configPath = Paths.get(IssueLoadRunnerTest.class.getResource("update-with-subject.json").toURI());
+            Config config = Config.of(configPath);
+
+            Path csvPath = Paths.get(IssueLoadRunnerTest.class.getResource("issues-all_fields.csv").toURI());
+
+            IssueLoadRunner runner = new IssueLoadRunner();
+
+            // 例外がスローされることを確認
+            assertThatThrownBy(() -> runner.execute(config, csvPath))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("Field type [SUBJECT] can not be used as a primary key.");
+        }
+    }
+
+    @Test
+    public void execute_マッピング表に一致するものが無い() throws URISyntaxException, IOException, InterruptedException {
+
+        try (MockWebServer server = new MockWebServer()) {
+
+            Path configPath = Paths.get(IssueLoadRunnerTest.class.getResource("mapping-unmatch.json").toURI());
+            Config config = Config.of(configPath);
+
+            Path csvPath = Paths.get(IssueLoadRunnerTest.class.getResource("issues-all_fields.csv").toURI());
+
+            IssueLoadRunner runner = new IssueLoadRunner();
+
+            // 例外がスローされることを確認
+            assertThatThrownBy(() -> runner.execute(config, csvPath))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("Could not mapping \"プロジェクト1\" of field [Project].");
         }
     }
 }

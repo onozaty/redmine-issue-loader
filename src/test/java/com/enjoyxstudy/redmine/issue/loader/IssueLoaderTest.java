@@ -1,6 +1,7 @@
 package com.enjoyxstudy.redmine.issue.loader;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.io.IOException;
 
@@ -226,6 +227,176 @@ public class IssueLoaderTest {
                 assertThat(request.getBody().readUtf8()).isEqualTo(
                         "{\"issue\":{\"project_id\":\"1\",\"tracker_id\":\"2\",\"status_id\":\"3\",\"priority_id\":\"4\",\"subject\":\"タイトル\",\"description\":\"説明\",\"category_id\":\"5\",\"parent_issue_id\":\"6\",\"custom_fields\":[{\"id\":1,\"value\":\"カスタム1\"}]}}");
             }
+        }
+    }
+
+    @Test
+    public void update_キーに一致するチケットが0件() throws IOException, InterruptedException {
+
+        try (MockWebServer server = new MockWebServer()) {
+
+            server.enqueue(new MockResponse().setBody("{\"issues\":[]}"));
+
+            server.start();
+
+            final String apiKey = "API1234567890";
+            Client client = Client.builder()
+                    .redmineBaseUrl(server.url("/").toString())
+                    .apiKey(apiKey)
+                    .build();
+
+            IssueLoader loader = new IssueLoader(client);
+
+            // 例外がスローされることを確認
+            assertThatThrownBy(() -> {
+                loader.update(
+                        new CustomField(1, "C"),
+                        new IssueTargetFieldsBuilder()
+                                .customField(new CustomField(2, "xxx"))
+                                .customField(new CustomField(3, "yyy"))
+                                .build());
+            })
+                    .isInstanceOf(IllegalStateException.class)
+                    .hasMessage("The target issue was not found. CustomField(id=1, value=C)");
+
+            assertThat(server.getRequestCount()).isEqualTo(1);
+
+            {
+                RecordedRequest request = server.takeRequest();
+                assertThat(request.getMethod()).isEqualTo("GET");
+                assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo(apiKey);
+                assertThat(request.getPath()).isEqualTo("/issues.json?cf_1=C");
+            }
+        }
+    }
+
+    @Test
+    public void update_キーに一致するチケットが複数件() throws IOException, InterruptedException {
+
+        try (MockWebServer server = new MockWebServer()) {
+
+            server.enqueue(new MockResponse().setBody("{\"issues\":[{\"id\":2},{\"id\":3}]}"));
+
+            server.start();
+
+            final String apiKey = "API1234567890";
+            Client client = Client.builder()
+                    .redmineBaseUrl(server.url("/").toString())
+                    .apiKey(apiKey)
+                    .build();
+
+            IssueLoader loader = new IssueLoader(client);
+
+            // 例外がスローされることを確認
+            assertThatThrownBy(() -> {
+                loader.update(
+                        new CustomField(1, "C"),
+                        new IssueTargetFieldsBuilder()
+                                .customField(new CustomField(2, "xxx"))
+                                .customField(new CustomField(3, "yyy"))
+                                .build());
+            })
+                    .isInstanceOf(IllegalStateException.class)
+                    .hasMessage("There are multiple target issue. CustomField(id=1, value=C)");
+
+            assertThat(server.getRequestCount()).isEqualTo(1);
+
+            {
+                RecordedRequest request = server.takeRequest();
+                assertThat(request.getMethod()).isEqualTo("GET");
+                assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo(apiKey);
+                assertThat(request.getPath()).isEqualTo("/issues.json?cf_1=C");
+            }
+        }
+    }
+
+    @Test
+    public void create_Redmineとの通信でエラー() throws IOException, InterruptedException {
+
+        try (MockWebServer server = new MockWebServer()) {
+
+            server.enqueue(new MockResponse().setStatus("HTTP/1.1 422 Unprocessable Entity"));
+
+            server.start();
+
+            final String apiKey = "API1234567890";
+            Client client = Client.builder()
+                    .redmineBaseUrl(server.url("/").toString())
+                    .apiKey(apiKey)
+                    .build();
+
+            IssueLoader loader = new IssueLoader(client);
+
+            assertThatThrownBy(() -> {
+                loader.create(
+                        new IssueTargetFieldsBuilder()
+                                .field(FieldType.PROJECT_ID, "1")
+                                .field(FieldType.SUBJECT, "タイトル")
+                                .build());
+            })
+                    .isInstanceOf(IOException.class)
+                    .hasMessageStartingWith("Failed to call Redmine API.");
+        }
+    }
+
+    @Test
+    public void update_Redmineとの通信でエラー_PKでの検索() throws IOException, InterruptedException {
+
+        try (MockWebServer server = new MockWebServer()) {
+
+            server.enqueue(new MockResponse().setStatus("HTTP/1.1 422 Unprocessable Entity"));
+
+            server.start();
+
+            final String apiKey = "API1234567890";
+            Client client = Client.builder()
+                    .redmineBaseUrl(server.url("/").toString())
+                    .apiKey(apiKey)
+                    .build();
+
+            IssueLoader loader = new IssueLoader(client);
+
+            assertThatThrownBy(() -> {
+                loader.update(
+                        new CustomField(1, "C"),
+                        new IssueTargetFieldsBuilder()
+                                .customField(new CustomField(2, "xxx"))
+                                .customField(new CustomField(3, "yyy"))
+                                .build());
+            })
+                    .isInstanceOf(IOException.class)
+                    .hasMessageStartingWith("Failed to call Redmine API.");
+        }
+    }
+
+    @Test
+    public void update_Redmineとの通信でエラー_更新() throws IOException, InterruptedException {
+
+        try (MockWebServer server = new MockWebServer()) {
+
+            server.enqueue(new MockResponse().setBody("{\"issues\":[{\"id\":2}]}"));
+            server.enqueue(new MockResponse().setStatus("HTTP/1.1 422 Unprocessable Entity"));
+
+            server.start();
+
+            final String apiKey = "API1234567890";
+            Client client = Client.builder()
+                    .redmineBaseUrl(server.url("/").toString())
+                    .apiKey(apiKey)
+                    .build();
+
+            IssueLoader loader = new IssueLoader(client);
+
+            assertThatThrownBy(() -> {
+                loader.update(
+                        new CustomField(1, "C"),
+                        new IssueTargetFieldsBuilder()
+                                .customField(new CustomField(2, "xxx"))
+                                .customField(new CustomField(3, "yyy"))
+                                .build());
+            })
+                    .isInstanceOf(IOException.class)
+                    .hasMessageStartingWith("Failed to call Redmine API.");
         }
     }
 }

@@ -1,0 +1,69 @@
+{
+  "mode": "CREATE",
+  "readmineUrl": "http://localhost",
+  "apyKey": "apikey1234567890",
+  "csvEncoding": "UTF-8",
+  "fields": [
+    {
+      "headerName": "Project",
+      "type": "PROJECT_ID",
+      "mappings" : {
+        "プロジェクト1" : 1,
+        "プロジェクト2" : 2
+      }
+    },
+    {
+      "headerName": "Tracker",
+      "type": "TRACKER_ID",
+      "mappings" : {
+        "トラッカー1" : 1,
+        "トラッカー2" : 2,
+        "トラッカー3" : 3
+      }
+    },
+    {
+      "headerName": "Status",
+      "type": "STATUS_ID",
+      "mappings" : {
+        "新規" : 1,
+        "進行中" : 2,
+        "解決" : 3
+      }
+    },
+    {
+      "headerName": "Priority",
+      "type": "PRIORITY_ID",
+      "mappings" : {
+        "低め" : 1,
+        "通常" : 2,
+        "高め" : 3
+      }
+    },
+    {
+      "headerName": "Description",
+      "type": "DESCRIPTION"
+    },
+    {
+      "headerName": "Category",
+      "type": "CATEGORY_ID",
+      "mappings" : {
+        "カテゴリ1" : 1,
+        "カテゴリ2" : 2
+      }
+    },
+    {
+      "headerName": "Parent #",
+      "type": "PARENT_ISSUE_ID"
+    },
+    {
+      "headerName": "Field1",
+      "type": "CUSTOM_FIELD",
+      "customFieldId": 1
+    },
+    {
+      "headerName": "Field2",
+      "type": "CUSTOM_FIELD",
+      "customFieldId": 2
+    }
+  ]
+}
