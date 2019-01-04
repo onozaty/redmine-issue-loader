@@ -1,4 +1,4 @@
-# redmine-issue-updater
+# redmine-issue-loader
 
 Redmineのチケットを更新するツールです。CSVファイルを読み込んで、チケットを更新します。
 
@@ -14,12 +14,12 @@ Java(JDK8以上)がインストールされた環境で、下記コマンドで�
 gradlew shadowJar
 ```
 
-`build/libs/redmine-issue-updater-all.jar`というファイルが出来上がります。
+`build/libs/redmine-issue-loader-all.jar`というファイルが出来上がります。
 
 下記のコマンドで、アプリケーションを実行します。
 
 ```
-java -jar build/libs/redmine-issue-updater-1.0.0-all.jar config.json issues.csv
+java -jar build/libs/redmine-issue-loader-1.0.0-all.jar config.json issues.csv
 ```
 
 第1引数が設定ファイル、第2引数が更新する情報が書かれたCSVファイルとなります。

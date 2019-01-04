@@ -1,4 +1,4 @@
-# redmine-issue-updater
+# redmine-issue-loader
 
 It is a tool to update Redmine issues. Read the CSV file and update the issue.
 
@@ -14,12 +14,12 @@ In the environment where Java (over JDK8) is installed, build the application wi
 gradlew shadowJar
 ```
 
-`build/libs/redmine-issue-updater-all.jar` will be created.
+`build/libs/redmine-issue-loader-all.jar` will be created.
 
 Execute the application with the following command.
 
 ```
-java -jar build/libs/redmine-issue-updater-1.0.0-all.jar config.json issues.csv
+java -jar build/libs/redmine-issue-loader-1.0.0-all.jar config.json issues.csv
 ```
 
 The first argument is the configuration file. The second argument will be the CSV file with the Issue to be updated.

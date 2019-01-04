@@ -16,4 +16,4 @@ include 'api'
 include 'services:webservice'
 */
 
-rootProject.name = 'redmine-issue-updater'
+rootProject.name = 'redmine-issue-loader'

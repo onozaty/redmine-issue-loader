@@ -26,7 +26,7 @@ public class IssueLoadRunner {
     public static void main(String[] args) throws IOException {
 
         if (args.length != 2) {
-            System.err.println("usage: java -jar redmine-issue-updater-all.jar <config file> <csv file>");
+            System.err.println("usage: java -jar redmine-issue-loader-all.jar <config file> <csv file>");
             System.exit(1);
         }
 

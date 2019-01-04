@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>redmine-issue-updater</name>
-	<comment>Project redmine-issue-updater created by Buildship.</comment>
+	<name>redmine-issue-loader</name>
+	<comment>Project redmine-issue-loader created by Buildship.</comment>
 	<projects>
 	</projects>
 	<buildSpec>
