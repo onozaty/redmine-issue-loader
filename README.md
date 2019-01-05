@@ -1,45 +1,111 @@
 # redmine-issue-loader
 
-It is a tool to update Redmine issues. Read the CSV file and update the issue.
+It load the issue information from the CSV file and registers or  updates it as a issue to Redmine.
 
-Currently only custom fields are targeted.
+It has the following characteristics.
 
-It is possible to update the issue using not only the issue ID but also the custom field as a key. However, the value of that custom field must be unique throughout the system.
+* Multiple tickets can be created or updated at once.
+* By setting the mapping information in the config file, contents of the CSV file can be converted and registered to Redmine.
+* It is possible to update the issue using not only the issue ID but also the custom field as a key. However, the value of that custom field must be unique throughout the system.
 
 ## Usage
 
-In the environment where Java (over JDK8) is installed, build the application with the following command.
+Java (JDK8 or higher) is required for execution.
 
-```
-gradlew shadowJar
-```
+Download the latest jar file (`redmine-issue-loader-x.x.x-all.jar`) from below.
 
-`build/libs/redmine-issue-loader-all.jar` will be created.
+* https://github.com/onozaty/redmine-issue-loader/releases/latest
 
 Execute the application with the following command.
 
 ```
-java -jar build/libs/redmine-issue-loader-1.0.0-all.jar config.json issues.csv
+java -jar redmine-issue-loader-2.0.0-all.jar config.json issues.csv
 ```
 
-The first argument is the configuration file. The second argument will be the CSV file with the Issue to be updated.
+The first argument is the configuration file. The second argument will be the CSV file with the Issue information.
 
-When executed, information on the updated issue is output as shown below.
+When executed, information on the loaded issue is output as shown below.
 
 ```
 Processing start...
-#1 is updated.
-#2 is updated.
-#3 is updated.
-Processing is completed. 3 issues were updated.
+#1 is created.
+#2 is created.
+#3 is created.
+Processing is completed. 3 issues were loaded.
 ```
 
-The following is an example of a configuration file.
+## Configuration file
+
+In the configuration file, you will list the connection information of Redmine, the mapping information of the fields on the CSV file and Redmine.
+
+### Ex: create issue
+
+An example of a configuration file when creating a new issue.
 
 ```json
 {
-  "readmineUrl": "http://localhost",
-  "apyKey": "20d0779f947c3c9a7248332a078ff458644ed73d",
+  "mode": "CREATE",
+  "readmineUrl": "http://192.168.33.10",
+  "apiKey": "8fba5d86e1d310d13860ba7ddd96be1b69743e7f",
+  "csvEncoding": "UTF-8",
+  "fields": [
+    {
+      "headerName": "Project",
+      "type": "PROJECT_ID",
+      "mappings" : {
+        "Project A" : 1,
+        "Project B" : 2
+      }
+    },
+    {
+      "headerName": "Tracker",
+      "type": "TRACKER_ID",
+      "mappings" : {
+        "Bug" : 1,
+        "Feature" : 2,
+        "Support" : 3
+      }
+    },
+    {
+      "headerName": "Subject",
+      "type": "SUBJECT"
+    },
+    {
+      "headerName": "Description",
+      "type": "DESCRIPTION"
+    },
+    {
+      "headerName": "Field1",
+      "type": "CUSTOM_FIELD",
+      "customFieldId": 1
+    },
+    {
+      "headerName": "Field2",
+      "type": "CUSTOM_FIELD",
+      "customFieldId": 2
+    }
+  ]
+}
+```
+
+An example of a CSV file corresponding to the above configuration file.
+
+```csv
+Project,Tracker,Subject,Description,Field1,Field2,Field3
+Project A,Bug,xxxx,yyyy,A,B,C
+Project B,Feature,aaaa,bbbb,,,
+Project B,Bug,zzzz,zzzz,1,2,3
+```
+
+### Ex: update issue
+
+An example of a configuration file when updating an issue.
+
+```json
+{
+  "mode": "UPDATE",
+  "readmineUrl": "http://192.168.33.10",
+  "apiKey": "8fba5d86e1d310d13860ba7ddd96be1b69743e7f",
   "csvEncoding": "UTF-8",
   "fields": [
     {
@@ -48,55 +114,113 @@ The following is an example of a configuration file.
       "primaryKey": true
     },
     {
-      "headerName": "Field1",
-      "type": "CUSTOM_FIELD",
-      "customFieldId": 1,
+      "headerName": "Status Id",
+      "type": "STATUS_ID",
       "primaryKey": false
     },
     {
-      "headerName": "Field2",
+      "headerName": "Field1",
       "type": "CUSTOM_FIELD",
-      "customFieldId": 2,
+      "customFieldId": 1,
       "primaryKey": false
     }
   ]
 }
 ```
 
-The contents of each item are as follows.
-
-* `readmineUrl` : Redmine's URL.
-* `apyKey` : Redmine API access key.
-* `csvEncoding` : CSV file encoding.
-* `fields` : CSV field information. It is not necessary to write all the CSV fields. Write what you use as the key and the field to update.
-    * `headerName` : Header name in CSV.
-    * `type` : Type. (`ISSUE_ID` or `CUSTOM_FIELD`)
-    * `customFieldId`
-    * `primaryKey` : Primary key? Search for issues to be updated using the information of the field set to `true`, and the field` false` will be updated.
-
-The ID of the custom field can be confirmed by the URL of the custom field setting screen.
-In the following cases, the ID of the custom field is `1`.
-
-* http://localhost/custom_fields/1/edit
-
-Or you can check the ID assigned to the custom field input field on the issue creation / editing screen. In the following cases, the ID of the custom field is `2`.
-
-```html
-<input type="text" name="issue[custom_field_values][2]" id="issue_custom_field_values_2" value="A" class="string_cf">
-```
-
-The following is an example of a CSV file.
+An example of a configuration file when updating an issue.
 
 ```csv
-#,Subject,Field1,Field2,Field3
-1,xxxx,A,a,C
-2,yyyy,B,b,B
-3,zzzz,C,c,A
+#,Subject,Status Id,Field1
+1,xxxx,1,A
+2,yyyy,2,B
+3,zzzz,3,C
 ```
 
-Samples of the configuration file and CSV file are located under the `sample` folder.
+### Contents of each item
+
+The contents of each item are as follows.
+
+* `mode` : processing mode. `CREATE` is newly created, `UPDATE` is updated.
+* `readmineUrl` : Redmine's URL.
+* `apiKey` : Redmine API access key.
+* `csvEncoding` : CSV file encoding.
+* `fields` : CSV field information. It is not necessary to write all the CSV fields. Write what you use as the key and the field to register.
+    * `headerName` : Header name in CSV.
+    * `type` : Type. What can be specified as a type is described later.
+    * `customFieldId` : ID of the custom field. Set if the type is `CUSTOM_FIELD`.
+    * `primaryKey` : Primary key? Search for issues to be updated using the information of the field set to `true`, and the field` false` will be updated. It is not necessary to specify when mode is `CREATE`.
+    * `mappings` : By describing the mapping between the value on CSV and the value on Redmine, contents of CSV can be converted and registered. For example, to convert a project name to a project ID.
+
+Items that can be specified as a type of field are as follows.
+
+|Type|mode: `CREATE`|mode: `UPDATE`|Contents|ID confirmation URL|
+|------|-------|----|----|----|
+|`ISSUE_ID`|×|○|Issue ID. It can only be specified as primary key for update.|-|
+|`PROJECT_ID`|○|○|Project ID. It is required item when new issue created.|`/projects.xml`|
+|`TRACKER_ID`|○|○|Tracker ID.|`/trackers.xml`|
+|`STATUS_ID`|○|○|Status ID.|`/issue_statuses.xml`|
+|`PRIORITY_ID`|○|○|Priority ID.|`/enumerations/issue_priorities.xml`|
+|`SUBJECT`|○|○|Subject. It is required item when new issue created.|-|
+|`DESCRIPTION`|○|○|Description.|-|
+|`CATEGORY_ID`|○|○|Category ID.|`/projects/:project_id/issue_categories.xml`<br>`:project_id` part specifies the ID of the target project.|
+|`PARENT_ISSUE_ID`|○|○|Parent issue ID.|-|
+|`CUSTOM_FIELD`|○|○|Custom field. It can also be used as a primary key for updating.<br>When specifying this type, you need to specify the ID of the corresponding custom field as `customFieldId`.|`/custom_fields.xml`|
+
+Items specified as ID can be confirmed with the ID confirmation URL in the table above.
+
+For example, in an environment where the URL of Redmine is `http://localhost`, if you want to check the ID of the project, you can confirm it by `http://localhost/projects.xml`.
+
+```xml
+<projects total_count="2" offset="0" limit="25" type="array">
+  <project>
+    <id>1</id>
+    <name>Project A</name>
+    <identifier>a</identifier>
+    <description/>
+    <status>1</status>
+    <is_public>true</is_public>
+    <created_on>2019-01-05T12:46:56Z</created_on>
+    <updated_on>2019-01-05T12:46:56Z</updated_on>
+  </project>
+  <project>
+    <id>2</id>
+    <name>Project B</name>
+    <identifier>b</identifier>
+    <description/>
+    <status>1</status>
+    <is_public>true</is_public>
+    <created_on>2019-01-05T12:47:07Z</created_on>
+    <updated_on>2019-01-05T12:47:07Z</updated_on>
+  </project>
+</projects>
+```
+
+If written in project name on CSV, you can convert to ID by specifying `mappings` based on the above contents.
+```json
+    {
+      "headerName": "Project",
+      "type": "PROJECT_ID",
+      "mappings" : {
+        "Project A" : 1,
+        "Project B" : 2
+      }
+    }
+```
+
+Samples of the configuration file and CSV file are located under the `sample` folder, so please refer to that sample as a reference.
 
 ## Notes
 
 * It will use Redmine's REST API, so the REST API must be enabled.
 * When using a custom field as a key, "Used as a filter" must be ON as the target custom field setting.
+
+## How to build
+
+When building from the source code, build the application with the following command in the environment where Java (JDK 8 or higher) is installed.
+
+```
+gradlew shadowJar
+```
+
+`build/libs/redmine-issue-loader-x.x.x-all.jar` will be created. (`x.x.x` is version number)
