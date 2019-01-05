@@ -1,4 +1,4 @@
-﻿#,Subject,Field1,Field2,Field3
-1,xxxx,A,a,C
-2,yyyy,B,b,B
-3,zzzz,C,c,A
+﻿#,Project,Tracker,Status,Priority,Subject,Description,Category,Parent #,Field1,Field2,Field3
+1,Project A,Bug,New,Normal,xxx,aaa,Category1,,A,a,A
+2,Project B,Bug,In Progress,Low,yyy,,,,B,b,B
+3,Project A,Support,Closed,High,zzz,ccc,Category2,1,C,c,C

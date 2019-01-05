@@ -1,0 +1,78 @@
+{
+  "mode": "CREATE",
+  "readmineUrl": "http://192.168.33.10",
+  "apiKey": "8fba5d86e1d310d13860ba7ddd96be1b69743e7f",
+  "csvEncoding": "UTF-8",
+  "fields": [
+    {
+      "headerName": "Project",
+      "type": "PROJECT_ID",
+      "mappings" : {
+        "Project A" : 1,
+        "Project B" : 2
+      }
+    },
+    {
+      "headerName": "Tracker",
+      "type": "TRACKER_ID",
+      "mappings" : {
+        "Bug" : 1,
+        "Feature" : 2,
+        "Support" : 3
+      }
+    },
+    {
+      "headerName": "Status",
+      "type": "STATUS_ID",
+      "mappings" : {
+        "New" : 1,
+        "In Progress" : 2,
+        "Resolved" : 3,
+        "Feedback" : 4,
+        "Closed" : 5,
+        "Rejected" : 6
+      }
+    },
+    {
+      "headerName": "Priority",
+      "type": "PRIORITY_ID",
+      "mappings" : {
+        "Low" : 1,
+        "Normal" : 2,
+        "High" : 3,
+        "Urgent" : 4,
+        "Immediate" : 5
+      }
+    },
+    {
+      "headerName": "Subject",
+      "type": "SUBJECT"
+    },
+    {
+      "headerName": "Description",
+      "type": "DESCRIPTION"
+    },
+    {
+      "headerName": "Category",
+      "type": "CATEGORY_ID",
+      "mappings" : {
+        "Category1" : 1,
+        "Category2" : 2
+      }
+    },
+    {
+      "headerName": "Parent #",
+      "type": "PARENT_ISSUE_ID"
+    },
+    {
+      "headerName": "Field1",
+      "type": "CUSTOM_FIELD",
+      "customFieldId": 1
+    },
+    {
+      "headerName": "Field2",
+      "type": "CUSTOM_FIELD",
+      "customFieldId": 2
+    }
+  ]
+}
