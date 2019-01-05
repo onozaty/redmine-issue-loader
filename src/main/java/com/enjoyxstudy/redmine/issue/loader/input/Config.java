@@ -9,9 +9,11 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 @Data
+@NoArgsConstructor
 public class Config {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -23,7 +25,7 @@ public class Config {
     private String readmineUrl;
 
     @NonNull
-    private String apyKey;
+    private String apiKey;
 
     @NonNull
     private String csvEncoding;

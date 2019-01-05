@@ -1,7 +1,7 @@
 {
   "mode": "CREATE",
   "readmineUrl": "http://localhost",
-  "apyKey": "apikey1234567890",
+  "apiKey": "apikey1234567890",
   "csvEncoding": "UTF-8",
   "fields": [
     {
