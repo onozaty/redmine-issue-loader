@@ -154,7 +154,7 @@ public class IssueLoadRunnerTest {
                 RecordedRequest request = server.takeRequest();
                 assertThat(request.getMethod()).isEqualTo("GET");
                 assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo("apikey1234567890");
-                assertThat(request.getPath()).isEqualTo("/issues.json?issue_id=1");
+                assertThat(request.getPath()).isEqualTo("/issues.json?status_id=*&issue_id=1");
             }
             {
                 RecordedRequest request = server.takeRequest();
@@ -170,7 +170,7 @@ public class IssueLoadRunnerTest {
                 RecordedRequest request = server.takeRequest();
                 assertThat(request.getMethod()).isEqualTo("GET");
                 assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo("apikey1234567890");
-                assertThat(request.getPath()).isEqualTo("/issues.json?issue_id=2");
+                assertThat(request.getPath()).isEqualTo("/issues.json?status_id=*&issue_id=2");
             }
             {
                 RecordedRequest request = server.takeRequest();
@@ -186,7 +186,7 @@ public class IssueLoadRunnerTest {
                 RecordedRequest request = server.takeRequest();
                 assertThat(request.getMethod()).isEqualTo("GET");
                 assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo("apikey1234567890");
-                assertThat(request.getPath()).isEqualTo("/issues.json?issue_id=3");
+                assertThat(request.getPath()).isEqualTo("/issues.json?status_id=*&issue_id=3");
             }
             {
                 RecordedRequest request = server.takeRequest();
@@ -232,7 +232,7 @@ public class IssueLoadRunnerTest {
                 RecordedRequest request = server.takeRequest();
                 assertThat(request.getMethod()).isEqualTo("GET");
                 assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo("apikey1234567890");
-                assertThat(request.getPath()).isEqualTo("/issues.json?cf_1=A");
+                assertThat(request.getPath()).isEqualTo("/issues.json?status_id=*&cf_1=A");
             }
             {
                 RecordedRequest request = server.takeRequest();
@@ -247,7 +247,7 @@ public class IssueLoadRunnerTest {
                 RecordedRequest request = server.takeRequest();
                 assertThat(request.getMethod()).isEqualTo("GET");
                 assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo("apikey1234567890");
-                assertThat(request.getPath()).isEqualTo("/issues.json?cf_1=B");
+                assertThat(request.getPath()).isEqualTo("/issues.json?status_id=*&cf_1=B");
             }
             {
                 RecordedRequest request = server.takeRequest();
@@ -262,7 +262,7 @@ public class IssueLoadRunnerTest {
                 RecordedRequest request = server.takeRequest();
                 assertThat(request.getMethod()).isEqualTo("GET");
                 assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo("apikey1234567890");
-                assertThat(request.getPath()).isEqualTo("/issues.json?cf_1=C");
+                assertThat(request.getPath()).isEqualTo("/issues.json?status_id=*&cf_1=C");
             }
             {
                 RecordedRequest request = server.takeRequest();

@@ -29,8 +29,8 @@ public class Client {
 
     private final String apiKey;
 
-    public List<Issue> getIssues(QueryParameter query) throws IOException {
-        return get("issues.json", query, IssuesBody.class).getIssues();
+    public List<Issue> getIssues(List<QueryParameter> queryParameters) throws IOException {
+        return get("issues.json", queryParameters, IssuesBody.class).getIssues();
     }
 
     public int createIssue(Map<String, Object> targetFields) throws IOException {
@@ -41,16 +41,18 @@ public class Client {
         put("issues/" + issueId + ".json", new IssueBody(targetFields));
     }
 
-    private <T> T get(String path, QueryParameter query, Class<T> responseType) throws IOException {
+    private <T> T get(String path, List<QueryParameter> queryParameters, Class<T> responseType) throws IOException {
 
-        HttpUrl url = HttpUrl.get(redmineBaseUrl)
+        okhttp3.HttpUrl.Builder httpUrlBuilder = HttpUrl.get(redmineBaseUrl)
                 .resolve(path)
-                .newBuilder()
-                .addQueryParameter(query.getName(), query.getValue())
-                .build();
+                .newBuilder();
+
+        for (QueryParameter queryParameter : queryParameters) {
+            httpUrlBuilder.addQueryParameter(queryParameter.getName(), queryParameter.getValue());
+        }
 
         Request request = new Request.Builder()
-                .url(url)
+                .url(httpUrlBuilder.build())
                 .addHeader("X-Redmine-API-Key", apiKey)
                 .build();
 
