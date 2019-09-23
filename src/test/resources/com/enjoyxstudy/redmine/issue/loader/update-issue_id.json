@@ -9,7 +9,7 @@
       "type": "ISSUE_ID",
       "primaryKey": false
     },
-   {
+    {
       "headerName": "Field1",
       "type": "CUSTOM_FIELD",
       "customFieldId": 1,

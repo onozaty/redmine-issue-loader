@@ -13,44 +13,44 @@
       "headerName": "Project",
       "type": "PROJECT_ID",
       "primaryKey": false,
-      "mappings" : {
-        "Project A" : 1,
-        "Project B" : 2
+      "mappings": {
+        "Project A": 1,
+        "Project B": 2
       }
     },
     {
       "headerName": "Tracker",
       "type": "TRACKER_ID",
       "primaryKey": false,
-      "mappings" : {
-        "Bug" : 1,
-        "Feature" : 2,
-        "Support" : 3
+      "mappings": {
+        "Bug": 1,
+        "Feature": 2,
+        "Support": 3
       }
     },
     {
       "headerName": "Status",
       "type": "STATUS_ID",
       "primaryKey": false,
-      "mappings" : {
-        "New" : 1,
-        "In Progress" : 2,
-        "Resolved" : 3,
-        "Feedback" : 4,
-        "Closed" : 5,
-        "Rejected" : 6
+      "mappings": {
+        "New": 1,
+        "In Progress": 2,
+        "Resolved": 3,
+        "Feedback": 4,
+        "Closed": 5,
+        "Rejected": 6
       }
     },
     {
       "headerName": "Priority",
       "type": "PRIORITY_ID",
       "primaryKey": false,
-      "mappings" : {
-        "Low" : 1,
-        "Normal" : 2,
-        "High" : 3,
-        "Urgent" : 4,
-        "Immediate" : 5
+      "mappings": {
+        "Low": 1,
+        "Normal": 2,
+        "High": 3,
+        "Urgent": 4,
+        "Immediate": 5
       }
     },
     {
@@ -67,9 +67,9 @@
       "headerName": "Category",
       "type": "CATEGORY_ID",
       "primaryKey": false,
-      "mappings" : {
-        "Category1" : 1,
-        "Category2" : 2
+      "mappings": {
+        "Category1": 1,
+        "Category2": 2
       }
     },
     {

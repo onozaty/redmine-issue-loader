@@ -7,9 +7,9 @@
     {
       "headerName": "Project",
       "type": "PROJECT_ID",
-      "mappings" : {
-        "プロジェクト1" : 1,
-        "プロジェクト2" : 2
+      "mappings": {
+        "プロジェクト1": 1,
+        "プロジェクト2": 2
       }
     },
     {
