@@ -25,7 +25,21 @@ public enum FieldType {
 
     PARENT_ISSUE_ID("parent_issue_id"),
 
-    CUSTOM_FIELD("custom_field");
+    CUSTOM_FIELD("custom_field"),
+
+    ASSIGNED_TO_ID("assigned_to_id"),
+
+    FIXED_VERSION_ID("fixed_version_id"),
+
+    START_DATE("start_date"),
+
+    DUE_DATE("due_date"),
+
+    DONE_RATIO("done_ratio"),
+
+    ESTIMATED_HOURS("estimated_hours"),
+
+    IS_PRIVATE("is_private");
 
     private final String fieldName;
 }

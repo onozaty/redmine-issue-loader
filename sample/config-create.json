@@ -65,6 +65,42 @@
       "type": "PARENT_ISSUE_ID"
     },
     {
+      "headerName": "Assignee",
+      "type": "ASSIGNED_TO_ID",
+      "mappings": {
+        "User A": 5,
+        "User B": 6
+      }
+    },
+    {
+      "headerName": "Target version",
+      "type": "FIXED_VERSION_ID",
+      "mappings": {
+        "v1.0": 1,
+        "v2.0": 2
+      }
+    },
+    {
+      "headerName": "Start date",
+      "type": "START_DATE"
+    },
+    {
+      "headerName": "Due date",
+      "type": "DUE_DATE"
+    },
+    {
+      "headerName": "% Done",
+      "type": "DONE_RATIO"
+    },
+    {
+      "headerName": "Estimated time",
+      "type": "ESTIMATED_HOURS"
+    },
+    {
+      "headerName": "Private",
+      "type": "IS_PRIVATE"
+    },
+    {
       "headerName": "Field1",
       "type": "CUSTOM_FIELD",
       "customFieldId": 1
