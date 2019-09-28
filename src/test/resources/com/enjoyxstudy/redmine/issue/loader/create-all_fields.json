@@ -40,12 +40,12 @@
       }
     },
     {
-      "headerName": "Subject",
-      "type": "SUBJECT"
-    },
-    {
-      "headerName": "Description",
-      "type": "DESCRIPTION"
+      "headerName": "Assignee",
+      "type": "ASSIGNED_TO_ID",
+      "mappings": {
+        "ユーザA": 5,
+        "ユーザB": 6
+      }
     },
     {
       "headerName": "Category",
@@ -56,8 +56,44 @@
       }
     },
     {
+      "headerName": "Target version",
+      "type": "FIXED_VERSION_ID",
+      "mappings": {
+        "v1.0": 1,
+        "v2.0": 2
+      }
+    },
+    {
       "headerName": "Parent #",
       "type": "PARENT_ISSUE_ID"
+    },
+    {
+      "headerName": "Subject",
+      "type": "SUBJECT"
+    },
+    {
+      "headerName": "Description",
+      "type": "DESCRIPTION"
+    },
+    {
+      "headerName": "Start date",
+      "type": "START_DATE"
+    },
+    {
+      "headerName": "Due date",
+      "type": "DUE_DATE"
+    },
+    {
+      "headerName": "% Done",
+      "type": "DONE_RATIO"
+    },
+    {
+      "headerName": "Private",
+      "type": "IS_PRIVATE"
+    },
+    {
+      "headerName": "Estimated time",
+      "type": "ESTIMATED_HOURS"
     },
     {
       "headerName": "Field1",

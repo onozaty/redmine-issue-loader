@@ -41,10 +41,17 @@ public class IssueLoaderTest {
                             .field(FieldType.TRACKER_ID, "2")
                             .field(FieldType.STATUS_ID, "3")
                             .field(FieldType.PRIORITY_ID, "4")
+                            .field(FieldType.ASSIGNED_TO_ID, "5")
+                            .field(FieldType.CATEGORY_ID, "6")
+                            .field(FieldType.FIXED_VERSION_ID, "7")
+                            .field(FieldType.PARENT_ISSUE_ID, "8")
                             .field(FieldType.SUBJECT, "タイトル")
                             .field(FieldType.DESCRIPTION, "説明")
-                            .field(FieldType.CATEGORY_ID, "5")
-                            .field(FieldType.PARENT_ISSUE_ID, "6")
+                            .field(FieldType.START_DATE, "2012-12-12")
+                            .field(FieldType.DUE_DATE, "2013-01-01")
+                            .field(FieldType.DONE_RATIO, "9")
+                            .field(FieldType.IS_PRIVATE, "true")
+                            .field(FieldType.ESTIMATED_HOURS, "10.5")
                             .customField(new CustomField(1, "カスタム1"))
                             .build());
 
@@ -57,7 +64,7 @@ public class IssueLoaderTest {
             assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo(apiKey);
             assertThat(request.getPath()).isEqualTo("/issues.json");
             assertThat(request.getBody().readUtf8()).isEqualTo(
-                    "{\"issue\":{\"project_id\":\"1\",\"tracker_id\":\"2\",\"status_id\":\"3\",\"priority_id\":\"4\",\"subject\":\"タイトル\",\"description\":\"説明\",\"category_id\":\"5\",\"parent_issue_id\":\"6\",\"custom_fields\":[{\"id\":1,\"value\":\"カスタム1\"}]}}");
+                    "{\"issue\":{\"project_id\":\"1\",\"tracker_id\":\"2\",\"status_id\":\"3\",\"priority_id\":\"4\",\"assigned_to_id\":\"5\",\"category_id\":\"6\",\"fixed_version_id\":\"7\",\"parent_issue_id\":\"8\",\"subject\":\"タイトル\",\"description\":\"説明\",\"start_date\":\"2012-12-12\",\"due_date\":\"2013-01-01\",\"done_ratio\":\"9\",\"is_private\":\"true\",\"estimated_hours\":\"10.5\",\"custom_fields\":[{\"id\":1,\"value\":\"カスタム1\"}]}}");
         }
     }
 
@@ -204,10 +211,17 @@ public class IssueLoaderTest {
                             .field(FieldType.TRACKER_ID, "2")
                             .field(FieldType.STATUS_ID, "3")
                             .field(FieldType.PRIORITY_ID, "4")
+                            .field(FieldType.ASSIGNED_TO_ID, "5")
+                            .field(FieldType.CATEGORY_ID, "6")
+                            .field(FieldType.FIXED_VERSION_ID, "7")
+                            .field(FieldType.PARENT_ISSUE_ID, "8")
                             .field(FieldType.SUBJECT, "タイトル")
                             .field(FieldType.DESCRIPTION, "説明")
-                            .field(FieldType.CATEGORY_ID, "5")
-                            .field(FieldType.PARENT_ISSUE_ID, "6")
+                            .field(FieldType.START_DATE, "2012-12-12")
+                            .field(FieldType.DUE_DATE, "2013-01-01")
+                            .field(FieldType.DONE_RATIO, "9")
+                            .field(FieldType.IS_PRIVATE, "true")
+                            .field(FieldType.ESTIMATED_HOURS, "10.5")
                             .customField(new CustomField(1, "カスタム1"))
                             .build());
 
@@ -225,7 +239,7 @@ public class IssueLoaderTest {
                 assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo(apiKey);
                 assertThat(request.getPath()).isEqualTo("/issues/2.json");
                 assertThat(request.getBody().readUtf8()).isEqualTo(
-                        "{\"issue\":{\"project_id\":\"1\",\"tracker_id\":\"2\",\"status_id\":\"3\",\"priority_id\":\"4\",\"subject\":\"タイトル\",\"description\":\"説明\",\"category_id\":\"5\",\"parent_issue_id\":\"6\",\"custom_fields\":[{\"id\":1,\"value\":\"カスタム1\"}]}}");
+                        "{\"issue\":{\"project_id\":\"1\",\"tracker_id\":\"2\",\"status_id\":\"3\",\"priority_id\":\"4\",\"assigned_to_id\":\"5\",\"category_id\":\"6\",\"fixed_version_id\":\"7\",\"parent_issue_id\":\"8\",\"subject\":\"タイトル\",\"description\":\"説明\",\"start_date\":\"2012-12-12\",\"due_date\":\"2013-01-01\",\"done_ratio\":\"9\",\"is_private\":\"true\",\"estimated_hours\":\"10.5\",\"custom_fields\":[{\"id\":1,\"value\":\"カスタム1\"}]}}");
             }
         }
     }

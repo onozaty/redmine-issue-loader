@@ -7,13 +7,11 @@
     {
       "headerName": "Field1",
       "type": "CUSTOM_FIELD",
-      "customFieldId": 1,
-      "primaryKey": false
+      "customFieldId": 1
     },
     {
       "headerName": "Status Id",
-      "type": "STATUS_ID",
-      "primaryKey": false
+      "type": "STATUS_ID"
     }
   ]
 }

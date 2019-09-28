@@ -12,7 +12,6 @@
     {
       "headerName": "Project",
       "type": "PROJECT_ID",
-      "primaryKey": false,
       "mappings": {
         "プロジェクト1": 1,
         "プロジェクト2": 2
@@ -21,7 +20,6 @@
     {
       "headerName": "Tracker",
       "type": "TRACKER_ID",
-      "primaryKey": false,
       "mappings": {
         "トラッカー1": 1,
         "トラッカー2": 2,
@@ -31,7 +29,6 @@
     {
       "headerName": "Status",
       "type": "STATUS_ID",
-      "primaryKey": false,
       "mappings": {
         "新規": 1,
         "進行中": 2,
@@ -41,7 +38,6 @@
     {
       "headerName": "Priority",
       "type": "PRIORITY_ID",
-      "primaryKey": false,
       "mappings": {
         "低め": 1,
         "通常": 2,
@@ -49,40 +45,70 @@
       }
     },
     {
-      "headerName": "Subject",
-      "type": "SUBJECT",
-      "primaryKey": false
-    },
-    {
-      "headerName": "Description",
-      "type": "DESCRIPTION",
-      "primaryKey": false
+      "headerName": "Assignee",
+      "type": "ASSIGNED_TO_ID",
+      "mappings": {
+        "ユーザA": 5,
+        "ユーザB": 6
+      }
     },
     {
       "headerName": "Category",
       "type": "CATEGORY_ID",
-      "primaryKey": false,
       "mappings": {
         "カテゴリ1": 1,
         "カテゴリ2": 2
       }
     },
     {
+      "headerName": "Target version",
+      "type": "FIXED_VERSION_ID",
+      "mappings": {
+        "v1.0": 1,
+        "v2.0": 2
+      }
+    },
+    {
       "headerName": "Parent #",
-      "type": "PARENT_ISSUE_ID",
-      "primaryKey": false
+      "type": "PARENT_ISSUE_ID"
+    },
+    {
+      "headerName": "Subject",
+      "type": "SUBJECT"
+    },
+    {
+      "headerName": "Description",
+      "type": "DESCRIPTION"
+    },
+    {
+      "headerName": "Start date",
+      "type": "START_DATE"
+    },
+    {
+      "headerName": "Due date",
+      "type": "DUE_DATE"
+    },
+    {
+      "headerName": "% Done",
+      "type": "DONE_RATIO"
+    },
+    {
+      "headerName": "Private",
+      "type": "IS_PRIVATE"
+    },
+    {
+      "headerName": "Estimated time",
+      "type": "ESTIMATED_HOURS"
     },
     {
       "headerName": "Field1",
       "type": "CUSTOM_FIELD",
-      "customFieldId": 1,
-      "primaryKey": false
+      "customFieldId": 1
     },
     {
       "headerName": "Field2",
       "type": "CUSTOM_FIELD",
-      "customFieldId": 2,
-      "primaryKey": false
+      "customFieldId": 2
     }
   ]
 }
