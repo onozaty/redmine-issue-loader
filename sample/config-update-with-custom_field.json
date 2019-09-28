@@ -7,7 +7,6 @@
     {
       "headerName": "Project",
       "type": "PROJECT_ID",
-      "primaryKey": false,
       "mappings": {
         "Project A": 1,
         "Project B": 2
@@ -16,7 +15,6 @@
     {
       "headerName": "Tracker",
       "type": "TRACKER_ID",
-      "primaryKey": false,
       "mappings": {
         "Bug": 1,
         "Feature": 2,
@@ -26,7 +24,6 @@
     {
       "headerName": "Status",
       "type": "STATUS_ID",
-      "primaryKey": false,
       "mappings": {
         "New": 1,
         "In Progress": 2,
@@ -39,7 +36,6 @@
     {
       "headerName": "Priority",
       "type": "PRIORITY_ID",
-      "primaryKey": false,
       "mappings": {
         "Low": 1,
         "Normal": 2,
@@ -47,30 +43,6 @@
         "Urgent": 4,
         "Immediate": 5
       }
-    },
-    {
-      "headerName": "Subject",
-      "type": "SUBJECT",
-      "primaryKey": false
-    },
-    {
-      "headerName": "Description",
-      "type": "DESCRIPTION",
-      "primaryKey": false
-    },
-    {
-      "headerName": "Category",
-      "type": "CATEGORY_ID",
-      "primaryKey": false,
-      "mappings": {
-        "Category1": 1,
-        "Category2": 2
-      }
-    },
-    {
-      "headerName": "Parent #",
-      "type": "PARENT_ISSUE_ID",
-      "primaryKey": false
     },
     {
       "headerName": "Assignee",
@@ -81,12 +53,32 @@
       }
     },
     {
+      "headerName": "Category",
+      "type": "CATEGORY_ID",
+      "mappings": {
+        "Category1": 1,
+        "Category2": 2
+      }
+    },
+    {
       "headerName": "Target version",
       "type": "FIXED_VERSION_ID",
       "mappings": {
         "v1.0": 1,
         "v2.0": 2
       }
+    },
+    {
+      "headerName": "Parent #",
+      "type": "PARENT_ISSUE_ID"
+    },
+    {
+      "headerName": "Subject",
+      "type": "SUBJECT"
+    },
+    {
+      "headerName": "Description",
+      "type": "DESCRIPTION"
     },
     {
       "headerName": "Start date",
@@ -101,24 +93,22 @@
       "type": "DONE_RATIO"
     },
     {
-      "headerName": "Estimated time",
-      "type": "ESTIMATED_HOURS"
-    },
-    {
       "headerName": "Private",
       "type": "IS_PRIVATE"
     },
     {
+      "headerName": "Estimated time",
+      "type": "ESTIMATED_HOURS"
+    },
+    {
       "headerName": "Field1",
       "type": "CUSTOM_FIELD",
-      "customFieldId": 1,
-      "primaryKey": false
+      "customFieldId": 1
     },
     {
       "headerName": "Field2",
       "type": "CUSTOM_FIELD",
-      "customFieldId": 2,
-      "primaryKey": false
+      "customFieldId": 2
     },
     {
       "headerName": "Field3",
