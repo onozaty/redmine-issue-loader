@@ -425,4 +425,71 @@ public class IssueLoadRunnerTest {
                     .hasMessage("Could not mapping \"プロジェクト1\" of field [Project].");
         }
     }
+
+    @Test
+    public void execute_正規化() throws URISyntaxException, IOException, InterruptedException {
+
+        try (MockWebServer server = new MockWebServer()) {
+
+            server.enqueue(new MockResponse().setBody("{\"issue\":{\"id\":1}}"));
+            server.enqueue(new MockResponse().setBody("{\"issue\":{\"id\":2}}"));
+            server.enqueue(new MockResponse().setBody("{\"issue\":{\"id\":3}}"));
+            server.enqueue(new MockResponse().setBody("{\"issue\":{\"id\":4}}"));
+
+            server.start();
+
+            Path configPath = Paths.get(IssueLoadRunnerTest.class.getResource("create-normalize.json").toURI());
+            Config config = Config.of(configPath);
+
+            // Mockに対してリクエスト送信するよう設定
+            config.setReadmineUrl(server.url("/").toString());
+
+            Path csvPath = Paths.get(IssueLoadRunnerTest.class.getResource("issues-normalize.csv").toURI());
+
+            IssueLoadRunner runner = new IssueLoadRunner(System.out);
+            runner.execute(config, csvPath);
+
+            assertThat(server.getRequestCount()).isEqualTo(4);
+
+            // 1レコード目
+            {
+                RecordedRequest request = server.takeRequest();
+                assertThat(request.getMethod()).isEqualTo("POST");
+                assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo("apikey1234567890");
+                assertThat(request.getPath()).isEqualTo("/issues.json");
+                assertThat(request.getBody().readUtf8()).isEqualTo(
+                        "{\"issue\":{\"project_id\":\"1\",\"subject\":\"ハイフン、0埋めあり\",\"start_date\":\"2012-01-01\",\"due_date\":\"2012-03-01\",\"is_private\":\"true\"}}");
+            }
+
+            // 2レコード目
+            {
+                RecordedRequest request = server.takeRequest();
+                assertThat(request.getMethod()).isEqualTo("POST");
+                assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo("apikey1234567890");
+                assertThat(request.getPath()).isEqualTo("/issues.json");
+                assertThat(request.getBody().readUtf8()).isEqualTo(
+                        "{\"issue\":{\"project_id\":\"1\",\"subject\":\"ハイフン、0埋め無し\",\"start_date\":\"2012-01-02\",\"due_date\":\"2012-03-02\",\"is_private\":\"false\"}}");
+            }
+
+            // 3レコード目
+            {
+                RecordedRequest request = server.takeRequest();
+                assertThat(request.getMethod()).isEqualTo("POST");
+                assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo("apikey1234567890");
+                assertThat(request.getPath()).isEqualTo("/issues.json");
+                assertThat(request.getBody().readUtf8()).isEqualTo(
+                        "{\"issue\":{\"project_id\":\"1\",\"subject\":\"スラッシュ、0埋めあり\",\"start_date\":\"2012-02-01\",\"due_date\":\"2012-04-01\",\"is_private\":\"true\"}}");
+            }
+
+            // 4レコード目
+            {
+                RecordedRequest request = server.takeRequest();
+                assertThat(request.getMethod()).isEqualTo("POST");
+                assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo("apikey1234567890");
+                assertThat(request.getPath()).isEqualTo("/issues.json");
+                assertThat(request.getBody().readUtf8()).isEqualTo(
+                        "{\"issue\":{\"project_id\":\"1\",\"subject\":\"スラッシュ、0埋め無し\",\"start_date\":\"2012-02-02\",\"due_date\":\"2012-04-02\",\"is_private\":\"false\"}}");
+            }
+        }
+    }
 }
