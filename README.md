@@ -19,7 +19,7 @@ Download the latest jar file (`redmine-issue-loader-x.x.x-all.jar`) from below.
 Execute the application with the following command.
 
 ```
-java -jar redmine-issue-loader-2.0.0-all.jar config.json issues.csv
+java -jar redmine-issue-loader-2.1.0-all.jar config.json issues.csv
 ```
 
 The first argument is the configuration file. The second argument will be the CSV file with the Issue information.
@@ -161,10 +161,17 @@ Items that can be specified as a type of field are as follows.
 |`TRACKER_ID`|○|○|Tracker ID.|`/trackers.xml`|
 |`STATUS_ID`|○|○|Status ID.|`/issue_statuses.xml`|
 |`PRIORITY_ID`|○|○|Priority ID.|`/enumerations/issue_priorities.xml`|
+|`ASSIGNED_TO_ID`|○|○|Assignee ID.|`/users.xml`|
+|`CATEGORY_ID`|○|○|Category ID.|`/projects/:project_id/issue_categories.xml`<br>`:project_id` part specifies the ID of the target project.|
+|`FIXED_VERSION_ID`|○|○|Target version ID.|`/projects/:project_id/versions.xml`<br>`:project_id` part specifies the ID of the target project.|
+|`PARENT_ISSUE_ID`|○|○|Parent issue ID.|-|
 |`SUBJECT`|○|○|Subject. It is required item when new issue created.|-|
 |`DESCRIPTION`|○|○|Description.|-|
-|`CATEGORY_ID`|○|○|Category ID.|`/projects/:project_id/issue_categories.xml`<br>`:project_id` part specifies the ID of the target project.|
-|`PARENT_ISSUE_ID`|○|○|Parent issue ID.|-|
+|`START_DATE`|○|○|Start date. The format is `YYYY-MM-DD` or `YYYY/MM/DD`.|-|
+|`DUE_DATE`|○|○|Due date. The format is `YYYY-MM-DD` or `YYYY/MM/DD`.|-|
+|`DONE_RATIO`|○|○|Done rate.|-|
+|`IS_PRIVATE`|○|○|Private. `true` or `false`.|-|
+|`ESTIMATED_HOURS`|○|○|Estimated time.|-|
 |`CUSTOM_FIELD`|○|○|Custom field. It can also be used as a primary key for updating.<br>When specifying this type, you need to specify the ID of the corresponding custom field as `customFieldId`.|`/custom_fields.xml`|
 
 Items specified as ID can be confirmed with the ID confirmation URL in the table above.

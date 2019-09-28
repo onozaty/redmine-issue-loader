@@ -11,7 +11,7 @@ tasks.withType(AbstractCompile)*.options*.encoding = defaultEncoding
 
 repositories { jcenter() }
 
-version = '2.0.0'
+version = '2.1.0'
 
 dependencies {
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
@@ -20,6 +20,7 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.7'
     compile group: 'org.apache.commons', name: 'commons-csv', version: '1.6'
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
 

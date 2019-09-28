@@ -104,8 +104,13 @@ public class IssueRecords implements Iterable<IssueRecord>, Closeable {
 
     private String convertValue(String value, FieldSetting fieldSetting) {
 
-        if (value.isEmpty() || fieldSetting.getMappings() == null) {
+        if (value.isEmpty()) {
             return value;
+        }
+
+        if (fieldSetting.getMappings() == null) {
+            // 変換表が無い場合、正規化だけ行う
+            return fieldSetting.getType().normalize(value);
         }
 
         // 変換表がある場合、CSVから取り出した値を変換

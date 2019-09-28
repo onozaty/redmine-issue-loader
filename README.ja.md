@@ -20,7 +20,7 @@ CSVファイルに記載された情報を読み込んで、Redmineにチケッ�
 入手したjarファイルを指定してアプリケーションを実行します。
 
 ```
-java -jar redmine-issue-loader-2.0.0-all.jar config.json issues.csv
+java -jar redmine-issue-loader-2.1.0-all.jar config.json issues.csv
 ```
 
 第1引数が設定ファイル、第2引数がチケットの情報が書かれたCSVファイルとなります。
@@ -162,10 +162,17 @@ Project B,Bug,zzzz,zzzz,1,2,3
 |`TRACKER_ID`|○|○|トラッカーのID。|`/trackers.xml`|
 |`STATUS_ID`|○|○|ステータスのID。|`/issue_statuses.xml`|
 |`PRIORITY_ID`|○|○|優先度のID。|`/enumerations/issue_priorities.xml`|
+|`ASSIGNED_TO_ID`|○|○|担当者のID。|`/users.xml`|
+|`CATEGORY_ID`|○|○|カテゴリのID。|`/projects/:project_id/issue_categories.xml`<br>`:project_id`の部分は、対象プロジェクトのIDを指定。|
+|`FIXED_VERSION_ID`|○|○|対象バージョンのID。|`/projects/:project_id/versions.xml`<br>`:project_id`の部分は、対象プロジェクトのIDを指定。|
+|`PARENT_ISSUE_ID`|○|○|親チケットのID。|-|
 |`SUBJECT`|○|○|題名。新規作成時は必須項目となる。|-|
 |`DESCRIPTION`|○|○|説明。|-|
-|`CATEGORY_ID`|○|○|カテゴリのID。|`/projects/:project_id/issue_categories.xml`<br>`:project_id`の部分は、対象プロジェクトのIDを指定。|
-|`PARENT_ISSUE_ID`|○|○|親チケットのID。|-|
+|`START_DATE`|○|○|開始日。`YYYY-MM-DD`または`YYYY/MM/DD`形式にて。|-|
+|`DUE_DATE`|○|○|期日。`YYYY-MM-DD`または`YYYY/MM/DD`形式にて。|-|
+|`DONE_RATIO`|○|○|進捗率。|-|
+|`IS_PRIVATE`|○|○|プライベートか。`true`または`false`を指定。|-|
+|`ESTIMATED_HOURS`|○|○|予定工数。|-|
 |`CUSTOM_FIELD`|○|○|カスタムフィールド。更新時のプライマリーキーとしても利用できる。<br>この種別を指定する際には、`customFieldId`として対応するカスタムフィールドのIDを指定する必要がある。|`/custom_fields.xml`|
 
 IDとして指定するものは、上記表のID確認URLでIDを確認することができます。

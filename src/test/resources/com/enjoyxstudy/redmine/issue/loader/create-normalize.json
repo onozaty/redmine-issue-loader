@@ -15,6 +15,18 @@
     {
       "headerName": "Subject",
       "type": "SUBJECT"
+    },
+    {
+      "headerName": "Start date",
+      "type": "START_DATE"
+    },
+    {
+      "headerName": "Due date",
+      "type": "DUE_DATE"
+    },
+    {
+      "headerName": "Private",
+      "type": "IS_PRIVATE"
     }
   ]
 }

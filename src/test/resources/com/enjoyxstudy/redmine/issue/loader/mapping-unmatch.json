@@ -12,10 +12,10 @@
     {
       "headerName": "Project",
       "type": "PROJECT_ID",
-      "primaryKey": false,
-      "mappings" : {
-        "プロジェクトx" : 1,
-        "プロジェクトy" : 2
+      "mappings": {
+        "プロジェクトx": 1,
+        "プロジェクトy": 2
       }
-    }]
+    }
+  ]
 }

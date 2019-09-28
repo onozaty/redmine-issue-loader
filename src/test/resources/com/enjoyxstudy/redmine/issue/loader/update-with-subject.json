@@ -7,40 +7,36 @@
     {
       "headerName": "Project",
       "type": "PROJECT_ID",
-      "primaryKey": false,
-      "mappings" : {
-        "プロジェクト1" : 1,
-        "プロジェクト2" : 2
+      "mappings": {
+        "プロジェクト1": 1,
+        "プロジェクト2": 2
       }
     },
     {
       "headerName": "Tracker",
       "type": "TRACKER_ID",
-      "primaryKey": false,
-      "mappings" : {
-        "トラッカー1" : 1,
-        "トラッカー2" : 2,
-        "トラッカー3" : 3
+      "mappings": {
+        "トラッカー1": 1,
+        "トラッカー2": 2,
+        "トラッカー3": 3
       }
     },
     {
       "headerName": "Status",
       "type": "STATUS_ID",
-      "primaryKey": false,
-      "mappings" : {
-        "新規" : 1,
-        "進行中" : 2,
-        "解決" : 3
+      "mappings": {
+        "新規": 1,
+        "進行中": 2,
+        "解決": 3
       }
     },
     {
       "headerName": "Priority",
       "type": "PRIORITY_ID",
-      "primaryKey": false,
-      "mappings" : {
-        "低め" : 1,
-        "通常" : 2,
-        "高め" : 3
+      "mappings": {
+        "低め": 1,
+        "通常": 2,
+        "高め": 3
       }
     },
     {
@@ -50,34 +46,29 @@
     },
     {
       "headerName": "Description",
-      "type": "DESCRIPTION",
-      "primaryKey": false
+      "type": "DESCRIPTION"
     },
     {
       "headerName": "Category",
       "type": "CATEGORY_ID",
-      "primaryKey": false,
-      "mappings" : {
-        "カテゴリ1" : 1,
-        "カテゴリ2" : 2
+      "mappings": {
+        "カテゴリ1": 1,
+        "カテゴリ2": 2
       }
     },
     {
       "headerName": "Parent #",
-      "type": "PARENT_ISSUE_ID",
-      "primaryKey": false
+      "type": "PARENT_ISSUE_ID"
     },
     {
       "headerName": "Field1",
       "type": "CUSTOM_FIELD",
-      "customFieldId": 1,
-      "primaryKey": false
+      "customFieldId": 1
     },
     {
       "headerName": "Field2",
       "type": "CUSTOM_FIELD",
-      "customFieldId": 2,
-      "primaryKey": false
+      "customFieldId": 2
     }
   ]
 }

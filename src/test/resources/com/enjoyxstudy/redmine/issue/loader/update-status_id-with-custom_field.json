@@ -12,8 +12,7 @@
     },
     {
       "headerName": "Status Id",
-      "type": "STATUS_ID",
-      "primaryKey": false
+      "type": "STATUS_ID"
     }
   ]
 }

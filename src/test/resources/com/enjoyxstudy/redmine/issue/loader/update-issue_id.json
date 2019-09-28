@@ -6,10 +6,9 @@
   "fields": [
     {
       "headerName": "#",
-      "type": "ISSUE_ID",
-      "primaryKey": false
+      "type": "ISSUE_ID"
     },
-   {
+    {
       "headerName": "Field1",
       "type": "CUSTOM_FIELD",
       "customFieldId": 1,
@@ -18,8 +17,7 @@
     {
       "headerName": "Field2",
       "type": "CUSTOM_FIELD",
-      "customFieldId": 2,
-      "primaryKey": false
+      "customFieldId": 2
     }
   ]
 }
