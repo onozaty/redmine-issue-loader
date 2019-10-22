@@ -20,12 +20,13 @@ public class Config {
 
     @NonNull
     private LoadMode mode;
-    
+
     @NonNull
     private String readmineUrl;
 
-    @NonNull
     private String apiKey;
+
+    private BasicAuth basicAuth;
 
     @NonNull
     private String csvEncoding;

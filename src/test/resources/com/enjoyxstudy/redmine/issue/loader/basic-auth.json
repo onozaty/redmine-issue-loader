@@ -1,0 +1,23 @@
+{
+  "mode": "CREATE",
+  "readmineUrl": "http://localhost",
+  "basicAuth": {
+    "username": "user",
+    "password": "pass"
+  },
+  "csvEncoding": "UTF-8",
+  "fields": [
+    {
+      "headerName": "Project",
+      "type": "PROJECT_ID",
+      "mappings": {
+        "プロジェクト1": 1,
+        "プロジェクト2": 2
+      }
+    },
+    {
+      "headerName": "Subject",
+      "type": "SUBJECT"
+    }
+  ]
+}

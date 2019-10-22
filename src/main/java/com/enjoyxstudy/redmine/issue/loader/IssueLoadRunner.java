@@ -56,6 +56,7 @@ public class IssueLoadRunner {
         Client client = Client.builder()
                 .redmineBaseUrl(config.getReadmineUrl())
                 .apiKey(config.getApiKey())
+                .basicAuth(config.getBasicAuth())
                 .build();
 
         IssueLoader loader = new IssueLoader(client);

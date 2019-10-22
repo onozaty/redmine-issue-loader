@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
+import com.enjoyxstudy.redmine.issue.loader.input.BasicAuth;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 
@@ -29,6 +32,8 @@ public class Client {
 
     private final String apiKey;
 
+    private final BasicAuth basicAuth;
+
     public List<Issue> getIssues(List<QueryParameter> queryParameters) throws IOException {
         return get("issues.json", queryParameters, IssuesBody.class).getIssues();
     }
@@ -51,9 +56,7 @@ public class Client {
             httpUrlBuilder.addQueryParameter(queryParameter.getName(), queryParameter.getValue());
         }
 
-        Request request = new Request.Builder()
-                .url(httpUrlBuilder.build())
-                .addHeader("X-Redmine-API-Key", apiKey)
+        Request request = newRequestBuilder(httpUrlBuilder.build())
                 .build();
 
         Response response = httpClient.newCall(request).execute();
@@ -78,9 +81,7 @@ public class Client {
                 MediaType.get("application/json; charset=utf-8"),
                 objectMapper.writeValueAsString(body));
 
-        Request request = new Request.Builder()
-                .url(url)
-                .addHeader("X-Redmine-API-Key", apiKey)
+        Request request = newRequestBuilder(url)
                 .post(requestBody)
                 .build();
 
@@ -106,9 +107,7 @@ public class Client {
                 MediaType.get("application/json; charset=utf-8"),
                 objectMapper.writeValueAsString(body));
 
-        Request request = new Request.Builder()
-                .url(url)
-                .addHeader("X-Redmine-API-Key", apiKey)
+        Request request = newRequestBuilder(url)
                 .put(requestBody)
                 .build();
 
@@ -117,5 +116,19 @@ public class Client {
         if (!response.isSuccessful()) {
             throw new IOException("Failed to call Redmine API. " + response);
         }
+    }
+
+    private Request.Builder newRequestBuilder(HttpUrl url) {
+
+        Request.Builder requestBuilder = new Request.Builder();
+        requestBuilder.url(url);
+
+        if (StringUtils.isNotEmpty(apiKey)) {
+            requestBuilder.addHeader("X-Redmine-API-Key", apiKey);
+        } else {
+            requestBuilder.addHeader("Authorization", basicAuth.toAuthorizationValue());
+        }
+
+        return requestBuilder;
     }
 }
