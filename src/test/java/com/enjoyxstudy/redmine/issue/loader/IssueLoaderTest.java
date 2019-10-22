@@ -8,6 +8,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import com.enjoyxstudy.redmine.issue.loader.client.Client;
+import com.enjoyxstudy.redmine.issue.loader.input.BasicAuth;
 import com.enjoyxstudy.redmine.issue.loader.input.CustomField;
 import com.enjoyxstudy.redmine.issue.loader.input.FieldType;
 import com.enjoyxstudy.redmine.issue.loader.input.IssueId;
@@ -97,6 +98,46 @@ public class IssueLoaderTest {
             RecordedRequest request = server.takeRequest();
             assertThat(request.getMethod()).isEqualTo("POST");
             assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo(apiKey);
+            assertThat(request.getPath()).isEqualTo("/issues.json");
+            assertThat(request.getBody().readUtf8()).isEqualTo(
+                    "{\"issue\":{\"project_id\":\"1\",\"subject\":\"タイトル\"}}");
+        }
+    }
+
+    @Test
+    public void create_Basic認証() throws IOException, InterruptedException {
+
+        try (MockWebServer server = new MockWebServer()) {
+
+            server.enqueue(new MockResponse().setBody("{\"issue\":{\"id\":2}}"));
+
+            server.start();
+
+            BasicAuth basicAuth = BasicAuth.builder()
+                    .username("user")
+                    .password("pass")
+                    .build();
+
+            Client client = Client.builder()
+                    .redmineBaseUrl(server.url("/").toString())
+                    .basicAuth(basicAuth)
+                    .build();
+
+            IssueLoader loader = new IssueLoader(client);
+            IssueId issueId = loader.create(
+                    new IssueTargetFieldsBuilder()
+                            .field(FieldType.PROJECT_ID, "1")
+                            .field(FieldType.SUBJECT, "タイトル")
+                            .build());
+
+            assertThat(issueId).isEqualTo(new IssueId(2));
+
+            assertThat(server.getRequestCount()).isEqualTo(1);
+
+            RecordedRequest request = server.takeRequest();
+            assertThat(request.getMethod()).isEqualTo("POST");
+            assertThat(request.getHeader("X-Redmine-API-Key")).isNull();
+            assertThat(request.getHeader("Authorization")).isEqualTo("Basic dXNlcjpwYXNz");
             assertThat(request.getPath()).isEqualTo("/issues.json");
             assertThat(request.getBody().readUtf8()).isEqualTo(
                     "{\"issue\":{\"project_id\":\"1\",\"subject\":\"タイトル\"}}");

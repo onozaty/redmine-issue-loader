@@ -122,6 +122,55 @@ public class IssueLoadRunnerTest {
     }
 
     @Test
+    public void execute_Basic認証() throws URISyntaxException, IOException, InterruptedException {
+
+        try (MockWebServer server = new MockWebServer()) {
+
+            server.enqueue(new MockResponse().setBody("{\"issue\":{\"id\":1}}"));
+            server.enqueue(new MockResponse().setBody("{\"issue\":{\"id\":2}}"));
+            server.enqueue(new MockResponse().setBody("{\"issue\":{\"id\":3}}"));
+
+            server.start();
+
+            Path configPath = Paths
+                    .get(IssueLoadRunnerTest.class.getResource("basic-auth.json").toURI());
+            Config config = Config.of(configPath);
+
+            // Mockに対してリクエスト送信するよう設定
+            config.setReadmineUrl(server.url("/").toString());
+
+            Path csvPath = Paths.get(IssueLoadRunnerTest.class.getResource("issues-project_id-subject.csv").toURI());
+
+            IssueLoadRunner runner = new IssueLoadRunner();
+            runner.execute(config, csvPath);
+
+            assertThat(server.getRequestCount()).isEqualTo(2);
+
+            // 1レコード目
+            {
+                RecordedRequest request = server.takeRequest();
+                assertThat(request.getMethod()).isEqualTo("POST");
+                assertThat(request.getHeader("X-Redmine-API-Key")).isNull();
+                assertThat(request.getHeader("Authorization")).isEqualTo("Basic dXNlcjpwYXNz");
+                assertThat(request.getPath()).isEqualTo("/issues.json");
+                assertThat(request.getBody().readUtf8()).isEqualTo(
+                        "{\"issue\":{\"project_id\":\"1\",\"subject\":\"タイトル1\"}}");
+            }
+
+            // 2レコード目
+            {
+                RecordedRequest request = server.takeRequest();
+                assertThat(request.getMethod()).isEqualTo("POST");
+                assertThat(request.getHeader("X-Redmine-API-Key")).isNull();
+                assertThat(request.getHeader("Authorization")).isEqualTo("Basic dXNlcjpwYXNz");
+                assertThat(request.getPath()).isEqualTo("/issues.json");
+                assertThat(request.getBody().readUtf8()).isEqualTo(
+                        "{\"issue\":{\"project_id\":\"2\",\"subject\":\"タイトル2\"}}");
+            }
+        }
+    }
+
+    @Test
     public void execute_チケットIDをキーとして全項目更新() throws URISyntaxException, IOException, InterruptedException {
 
         try (MockWebServer server = new MockWebServer()) {
