@@ -20,7 +20,7 @@ CSVファイルに記載された情報を読み込んで、Redmineにチケッ�
 入手したjarファイルを指定してアプリケーションを実行します。
 
 ```
-java -jar redmine-issue-loader-2.1.0-all.jar config.json issues.csv
+java -jar redmine-issue-loader-2.2.0-all.jar config.json issues.csv
 ```
 
 第1引数が設定ファイル、第2引数がチケットの情報が書かれたCSVファイルとなります。
@@ -145,6 +145,9 @@ Project B,Bug,zzzz,zzzz,1,2,3
 * `mode` : 処理モード。`CREATE`が新規作成、`UPDATE`が更新。
 * `readmineUrl` : Redmineの接続先URL。
 * `apiKey` : RedmineのAPIアクセスキー。
+* `basicAuth` : RedmineのBasic認証で利用する情報。(APIアクセスキーまたはBasic認証のどちらかを指定する必要があります)
+  * `username` : Basic認証で利用するユーザ名。
+  * `password` : Basic認証で利用するパスワード。
 * `csvEncoding` : CSVファイルのエンコーディング。
 * `fields` : CSVの各フィールド情報。CSV内の全てのフィールドを記載するのではなく、キーとして使用するものと、Redmineに登録するフィールドを記載する。
     * `headerName` : CSV内のヘッダ名。

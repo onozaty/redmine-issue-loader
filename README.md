@@ -19,7 +19,7 @@ Download the latest jar file (`redmine-issue-loader-x.x.x-all.jar`) from below.
 Execute the application with the following command.
 
 ```
-java -jar redmine-issue-loader-2.1.0-all.jar config.json issues.csv
+java -jar redmine-issue-loader-2.2.0-all.jar config.json issues.csv
 ```
 
 The first argument is the configuration file. The second argument will be the CSV file with the Issue information.
@@ -144,6 +144,9 @@ The contents of each item are as follows.
 * `mode` : processing mode. `CREATE` is newly created, `UPDATE` is updated.
 * `readmineUrl` : Redmine's URL.
 * `apiKey` : Redmine API access key.
+* `basicAuth` : Basic authentication. You must specify either API access key or Basic authentication.
+  * `username` : User name used for basic authentication.
+  * `password` : password used for basic authentication.
 * `csvEncoding` : CSV file encoding.
 * `fields` : CSV field information. It is not necessary to write all the CSV fields. Write what you use as the key and the field to register.
     * `headerName` : Header name in CSV.
