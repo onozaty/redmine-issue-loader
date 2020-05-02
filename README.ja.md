@@ -145,10 +145,10 @@ Project B,Bug,zzzz,zzzz,1,2,3
 * `mode` : 処理モード。`CREATE`が新規作成、`UPDATE`が更新。
 * `readmineUrl` : Redmineの接続先URL。
 * `apiKey` : RedmineのAPIアクセスキー。
-* `timeout` : Redmineへリクエスト時のタイムアウト秒。未設定の場合は`10`となる。
 * `basicAuth` : RedmineのBasic認証で利用する情報。(APIアクセスキーまたはBasic認証のどちらかを指定する必要があります)
   * `username` : Basic認証で利用するユーザ名。
   * `password` : Basic認証で利用するパスワード。
+* `timeout` : Redmineへリクエスト時のタイムアウト秒。未設定の場合は`10`となる。
 * `csvEncoding` : CSVファイルのエンコーディング。
 * `fields` : CSVの各フィールド情報。CSV内の全てのフィールドを記載するのではなく、キーとして使用するものと、Redmineに登録するフィールドを記載する。
     * `headerName` : CSV内のヘッダ名。

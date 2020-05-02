@@ -144,10 +144,10 @@ The contents of each item are as follows.
 * `mode` : processing mode. `CREATE` is newly created, `UPDATE` is updated.
 * `readmineUrl` : Redmine's URL.
 * `apiKey` : Redmine API access key.
-* `timeout` : Timeout seconds when making a request to Redmine. If not set, it will be `10`.
 * `basicAuth` : Basic authentication. You must specify either API access key or Basic authentication.
   * `username` : User name used for basic authentication.
   * `password` : password used for basic authentication.
+* `timeout` : Timeout seconds when making a request to Redmine. If not set, it will be `10`.
 * `csvEncoding` : CSV file encoding.
 * `fields` : CSV field information. It is not necessary to write all the CSV fields. Write what you use as the key and the field to register.
     * `headerName` : Header name in CSV.
