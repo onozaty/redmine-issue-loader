@@ -3,6 +3,7 @@ package com.enjoyxstudy.redmine.issue.loader.client;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -20,10 +21,9 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 @Value
-@Builder
 public class Client {
 
-    private final OkHttpClient httpClient = new OkHttpClient();
+    private final OkHttpClient httpClient;
 
     private final ObjectMapper objectMapper = new ObjectMapper()
             .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
@@ -33,6 +33,19 @@ public class Client {
     private final String apiKey;
 
     private final BasicAuth basicAuth;
+
+    @Builder
+    public Client(String redmineBaseUrl, String apiKey, BasicAuth basicAuth, int timeout) {
+        this.redmineBaseUrl = redmineBaseUrl;
+        this.apiKey = apiKey;
+        this.basicAuth = basicAuth;
+
+        httpClient = new OkHttpClient.Builder()
+                .connectTimeout(timeout, TimeUnit.SECONDS)
+                .readTimeout(timeout, TimeUnit.SECONDS)
+                .writeTimeout(timeout, TimeUnit.SECONDS)
+                .build();
+    }
 
     public List<Issue> getIssues(List<QueryParameter> queryParameters) throws IOException {
         return get("issues.json", queryParameters, IssuesBody.class).getIssues();
