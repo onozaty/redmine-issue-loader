@@ -4,9 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 
@@ -81,7 +83,6 @@ public class IssueLoadRunnerTest {
 
             server.enqueue(new MockResponse().setBody("{\"issue\":{\"id\":1}}"));
             server.enqueue(new MockResponse().setBody("{\"issue\":{\"id\":2}}"));
-            server.enqueue(new MockResponse().setBody("{\"issue\":{\"id\":3}}"));
 
             server.start();
 
@@ -128,7 +129,6 @@ public class IssueLoadRunnerTest {
 
             server.enqueue(new MockResponse().setBody("{\"issue\":{\"id\":1}}"));
             server.enqueue(new MockResponse().setBody("{\"issue\":{\"id\":2}}"));
-            server.enqueue(new MockResponse().setBody("{\"issue\":{\"id\":3}}"));
 
             server.start();
 
@@ -538,6 +538,117 @@ public class IssueLoadRunnerTest {
                 assertThat(request.getPath()).isEqualTo("/issues.json");
                 assertThat(request.getBody().readUtf8()).isEqualTo(
                         "{\"issue\":{\"project_id\":\"1\",\"subject\":\"スラッシュ、0埋め無し\",\"start_date\":\"2012-02-02\",\"due_date\":\"2012-04-02\",\"is_private\":\"false\"}}");
+            }
+        }
+    }
+
+    @Test
+    public void execute_タイムアウト設定_デフォルト() throws URISyntaxException, IOException, InterruptedException {
+
+        try (MockWebServer server = new MockWebServer()) {
+
+            // わざと15秒遅らせる(デフォルト10秒なのでタイムアウト発生)
+            server.enqueue(new MockResponse().setBody("{\"issue\":{\"id\":1}}").setBodyDelay(15, TimeUnit.SECONDS));
+            server.enqueue(new MockResponse().setBody("{\"issue\":{\"id\":2}}"));
+
+            server.start();
+
+            Path configPath = Paths
+                    .get(IssueLoadRunnerTest.class.getResource("create-project_id-subject.json").toURI());
+            Config config = Config.of(configPath);
+
+            // Mockに対してリクエスト送信するよう設定
+            config.setReadmineUrl(server.url("/").toString());
+
+            Path csvPath = Paths.get(IssueLoadRunnerTest.class.getResource("issues-project_id-subject.csv").toURI());
+
+            IssueLoadRunner runner = new IssueLoadRunner();
+
+            // 例外がスローされることを確認
+            assertThatThrownBy(() -> runner.execute(config, csvPath))
+                    .isInstanceOf(SocketTimeoutException.class);
+        }
+    }
+
+    @Test
+    public void execute_タイムアウト設定_デフォルトから変更() throws URISyntaxException, IOException, InterruptedException {
+
+        try (MockWebServer server = new MockWebServer()) {
+
+            // わざと15秒遅らせる(設定ファイルでデフォルト10秒のものを20秒に変えているのでタイムアウトしない)
+            server.enqueue(new MockResponse().setBody("{\"issue\":{\"id\":1}}").setBodyDelay(15, TimeUnit.SECONDS));
+            server.enqueue(new MockResponse().setBody("{\"issue\":{\"id\":2}}"));
+
+            server.start();
+
+            Path configPath = Paths
+                    .get(IssueLoadRunnerTest.class.getResource("timeout.json").toURI());
+            Config config = Config.of(configPath);
+
+            // Mockに対してリクエスト送信するよう設定
+            config.setReadmineUrl(server.url("/").toString());
+
+            Path csvPath = Paths.get(IssueLoadRunnerTest.class.getResource("issues-project_id-subject.csv").toURI());
+
+            IssueLoadRunner runner = new IssueLoadRunner();
+            runner.execute(config, csvPath);
+
+            assertThat(server.getRequestCount()).isEqualTo(2);
+
+            // 1レコード目
+            {
+                RecordedRequest request = server.takeRequest();
+                assertThat(request.getMethod()).isEqualTo("POST");
+                assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo("apikey1234567890");
+                assertThat(request.getHeader("Authorization")).isNull();
+                assertThat(request.getPath()).isEqualTo("/issues.json");
+                assertThat(request.getBody().readUtf8()).isEqualTo(
+                        "{\"issue\":{\"project_id\":\"1\",\"subject\":\"タイトル1\"}}");
+            }
+
+            // 2レコード目
+            {
+                RecordedRequest request = server.takeRequest();
+                assertThat(request.getMethod()).isEqualTo("POST");
+                assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo("apikey1234567890");
+                assertThat(request.getHeader("Authorization")).isNull();
+                assertThat(request.getPath()).isEqualTo("/issues.json");
+                assertThat(request.getBody().readUtf8()).isEqualTo(
+                        "{\"issue\":{\"project_id\":\"2\",\"subject\":\"タイトル2\"}}");
+            }
+        }
+    }
+
+    @Test
+    public void execute_文字置換() throws URISyntaxException, IOException, InterruptedException {
+
+        try (MockWebServer server = new MockWebServer()) {
+
+            server.enqueue(new MockResponse().setBody("{\"issue\":{\"id\":1}}"));
+
+            server.start();
+
+            Path configPath = Paths.get(IssueLoadRunnerTest.class.getResource("replace.json").toURI());
+            Config config = Config.of(configPath);
+
+            // Mockに対してリクエスト送信するよう設定
+            config.setReadmineUrl(server.url("/").toString());
+
+            Path csvPath = Paths.get(IssueLoadRunnerTest.class.getResource("replace.csv").toURI());
+
+            IssueLoadRunner runner = new IssueLoadRunner();
+            runner.execute(config, csvPath);
+
+            assertThat(server.getRequestCount()).isEqualTo(1);
+
+            // 1レコード目
+            {
+                RecordedRequest request = server.takeRequest();
+                assertThat(request.getMethod()).isEqualTo("POST");
+                assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo("apikey1234567890");
+                assertThat(request.getPath()).isEqualTo("/issues.json");
+                assertThat(request.getBody().readUtf8()).isEqualTo(
+                        "{\"issue\":{\"project_id\":\"1\",\"subject\":\"_田\",\"description\":\"絵文字___\"}}");
             }
         }
     }

@@ -1,0 +1,28 @@
+{
+  "mode": "CREATE",
+  "readmineUrl": "http://localhost",
+  "apiKey": "apikey1234567890",
+  "replaceString": {
+    "pattern": "[^\u0000-\uffff]",
+    "replacement": "_"
+  },
+  "csvEncoding": "UTF-8",
+  "fields": [
+    {
+      "headerName": "Project",
+      "type": "PROJECT_ID",
+      "mappings": {
+        "プロジェクト1": 1,
+        "プロジェクト2": 2
+      }
+    },
+    {
+      "headerName": "Subject",
+      "type": "SUBJECT"
+    },
+    {
+      "headerName": "Description",
+      "type": "DESCRIPTION"
+    }
+  ]
+}

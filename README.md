@@ -147,7 +147,11 @@ The contents of each item are as follows.
 * `basicAuth` : Basic authentication. You must specify either API access key or Basic authentication.
   * `username` : User name used for basic authentication.
   * `password` : password used for basic authentication.
+* `timeout` : Timeout seconds when making a request to Redmine. If not set, it will be `10`.
 * `csvEncoding` : CSV file encoding.
+* `replaceString` : String replacement settings.
+  * `pattern` : Regular expression of the character to be replaced.
+  * `replacement` : The replacement character.
 * `fields` : CSV field information. It is not necessary to write all the CSV fields. Write what you use as the key and the field to register.
     * `headerName` : Header name in CSV.
     * `type` : Type. What can be specified as a type is described later.

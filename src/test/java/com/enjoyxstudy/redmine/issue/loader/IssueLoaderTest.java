@@ -30,10 +30,7 @@ public class IssueLoaderTest {
             server.start();
 
             final String apiKey = "API1234567890";
-            Client client = Client.builder()
-                    .redmineBaseUrl(server.url("/").toString())
-                    .apiKey(apiKey)
-                    .build();
+            Client client = createClient(server, apiKey);
 
             IssueLoader loader = new IssueLoader(client);
             IssueId issueId = loader.create(
@@ -79,10 +76,7 @@ public class IssueLoaderTest {
             server.start();
 
             final String apiKey = "API1234567890";
-            Client client = Client.builder()
-                    .redmineBaseUrl(server.url("/").toString())
-                    .apiKey(apiKey)
-                    .build();
+            Client client = createClient(server, apiKey);
 
             IssueLoader loader = new IssueLoader(client);
             IssueId issueId = loader.create(
@@ -121,6 +115,7 @@ public class IssueLoaderTest {
             Client client = Client.builder()
                     .redmineBaseUrl(server.url("/").toString())
                     .basicAuth(basicAuth)
+                    .timeout(10)
                     .build();
 
             IssueLoader loader = new IssueLoader(client);
@@ -155,10 +150,7 @@ public class IssueLoaderTest {
             server.start();
 
             final String apiKey = "API1234567890";
-            Client client = Client.builder()
-                    .redmineBaseUrl(server.url("/").toString())
-                    .apiKey(apiKey)
-                    .build();
+            Client client = createClient(server, apiKey);
 
             IssueLoader loader = new IssueLoader(client);
             loader.update(
@@ -198,10 +190,7 @@ public class IssueLoaderTest {
             server.start();
 
             final String apiKey = "API1234567890";
-            Client client = Client.builder()
-                    .redmineBaseUrl(server.url("/").toString())
-                    .apiKey(apiKey)
-                    .build();
+            Client client = createClient(server, apiKey);
 
             IssueLoader loader = new IssueLoader(client);
             loader.update(
@@ -239,10 +228,7 @@ public class IssueLoaderTest {
             server.start();
 
             final String apiKey = "API1234567890";
-            Client client = Client.builder()
-                    .redmineBaseUrl(server.url("/").toString())
-                    .apiKey(apiKey)
-                    .build();
+            Client client = createClient(server, apiKey);
 
             IssueLoader loader = new IssueLoader(client);
             loader.update(
@@ -295,10 +281,7 @@ public class IssueLoaderTest {
             server.start();
 
             final String apiKey = "API1234567890";
-            Client client = Client.builder()
-                    .redmineBaseUrl(server.url("/").toString())
-                    .apiKey(apiKey)
-                    .build();
+            Client client = createClient(server, apiKey);
 
             IssueLoader loader = new IssueLoader(client);
 
@@ -335,10 +318,7 @@ public class IssueLoaderTest {
             server.start();
 
             final String apiKey = "API1234567890";
-            Client client = Client.builder()
-                    .redmineBaseUrl(server.url("/").toString())
-                    .apiKey(apiKey)
-                    .build();
+            Client client = createClient(server, apiKey);
 
             IssueLoader loader = new IssueLoader(client);
 
@@ -375,10 +355,7 @@ public class IssueLoaderTest {
             server.start();
 
             final String apiKey = "API1234567890";
-            Client client = Client.builder()
-                    .redmineBaseUrl(server.url("/").toString())
-                    .apiKey(apiKey)
-                    .build();
+            Client client = createClient(server, apiKey);
 
             IssueLoader loader = new IssueLoader(client);
 
@@ -404,10 +381,7 @@ public class IssueLoaderTest {
             server.start();
 
             final String apiKey = "API1234567890";
-            Client client = Client.builder()
-                    .redmineBaseUrl(server.url("/").toString())
-                    .apiKey(apiKey)
-                    .build();
+            Client client = createClient(server, apiKey);
 
             IssueLoader loader = new IssueLoader(client);
 
@@ -435,10 +409,7 @@ public class IssueLoaderTest {
             server.start();
 
             final String apiKey = "API1234567890";
-            Client client = Client.builder()
-                    .redmineBaseUrl(server.url("/").toString())
-                    .apiKey(apiKey)
-                    .build();
+            Client client = createClient(server, apiKey);
 
             IssueLoader loader = new IssueLoader(client);
 
@@ -454,4 +425,14 @@ public class IssueLoaderTest {
                     .hasMessageStartingWith("Failed to call Redmine API.");
         }
     }
+
+    private Client createClient(MockWebServer server, final String apiKey) {
+
+        return Client.builder()
+                .redmineBaseUrl(server.url("/").toString())
+                .apiKey(apiKey)
+                .timeout(10)
+                .build();
+    }
+
 }

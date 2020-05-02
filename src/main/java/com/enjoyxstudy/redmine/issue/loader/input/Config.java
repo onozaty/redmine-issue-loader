@@ -28,6 +28,10 @@ public class Config {
 
     private BasicAuth basicAuth;
 
+    private int timeout = 10;
+
+    private ReplaceString replaceString;
+
     @NonNull
     private String csvEncoding;
 

@@ -108,6 +108,11 @@ public class IssueRecords implements Iterable<IssueRecord>, Closeable {
             return value;
         }
 
+        if (config.getReplaceString() != null) {
+            // 置換文字が設定されている場合、置換後の文字を使う
+            value = config.getReplaceString().replace(value);
+        }
+
         if (fieldSetting.getMappings() == null) {
             // 変換表が無い場合、正規化だけ行う
             return fieldSetting.getType().normalize(value);
