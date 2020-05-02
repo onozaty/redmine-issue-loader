@@ -149,6 +149,9 @@ Project B,Bug,zzzz,zzzz,1,2,3
   * `username` : Basic認証で利用するユーザ名。
   * `password` : Basic認証で利用するパスワード。
 * `timeout` : Redmineへリクエスト時のタイムアウト秒。未設定の場合は`10`となる。
+* `replaceString` : 文字列置換の設定。
+  * `pattern` : 置換対象文字の正規表現。
+  * `replacement` : 置換後の文字。
 * `csvEncoding` : CSVファイルのエンコーディング。
 * `fields` : CSVの各フィールド情報。CSV内の全てのフィールドを記載するのではなく、キーとして使用するものと、Redmineに登録するフィールドを記載する。
     * `headerName` : CSV内のヘッダ名。

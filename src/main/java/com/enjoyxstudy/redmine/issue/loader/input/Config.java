@@ -30,6 +30,8 @@ public class Config {
 
     private int timeout = 10;
 
+    private ReplaceString replaceString;
+
     @NonNull
     private String csvEncoding;
 
