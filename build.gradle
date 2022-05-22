@@ -38,7 +38,7 @@ dependencies {
     testImplementation 'com.squareup.okhttp3:mockwebserver:4.9.3'
 }
 
-def mainClassName = 'com.enjoyxstudy.redmine.issue.loader.IssueLoadRunner'
+def mainClassName = 'com.github.onozaty.redmine.issue.loader.IssueLoadRunner'
 
 jar {
     manifest { attributes('Main-Class' : mainClassName, "Implementation-Version": version) }
