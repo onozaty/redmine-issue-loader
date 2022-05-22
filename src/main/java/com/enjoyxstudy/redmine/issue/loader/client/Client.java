@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.enjoyxstudy.redmine.issue.loader.input.BasicAuth;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 
 import lombok.Builder;
 import lombok.Value;
@@ -26,7 +26,7 @@ public class Client {
     private final OkHttpClient httpClient;
 
     private final ObjectMapper objectMapper = new ObjectMapper()
-            .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+            .setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
 
     private final String redmineBaseUrl;
 
@@ -91,8 +91,8 @@ public class Client {
                 .build();
 
         RequestBody requestBody = RequestBody.create(
-                MediaType.get("application/json; charset=utf-8"),
-                objectMapper.writeValueAsString(body));
+                objectMapper.writeValueAsString(body),
+                MediaType.get("application/json; charset=utf-8"));
 
         Request request = newRequestBuilder(url)
                 .post(requestBody)
@@ -117,8 +117,8 @@ public class Client {
                 .build();
 
         RequestBody requestBody = RequestBody.create(
-                MediaType.get("application/json; charset=utf-8"),
-                objectMapper.writeValueAsString(body));
+                objectMapper.writeValueAsString(body),
+                MediaType.get("application/json; charset=utf-8"));
 
         Request request = newRequestBuilder(url)
                 .put(requestBody)

@@ -31,7 +31,10 @@ public class IssueRecords implements Iterable<IssueRecord>, Closeable {
 
         return new IssueRecords(
                 config,
-                CSVFormat.EXCEL.withHeader().parse(csvReader));
+                CSVFormat.EXCEL.builder()
+                        .setHeader()
+                        .build()
+                        .parse(csvReader));
     }
 
     @Override
