@@ -104,6 +104,12 @@
       "headerName": "Field2",
       "type": "CUSTOM_FIELD",
       "customFieldId": 2
+    },
+    {
+      "headerName": "Field3",
+      "type": "CUSTOM_FIELD",
+      "customFieldId": 3,
+      "multipleItemSeparator": ";"
     }
   ]
 }

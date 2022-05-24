@@ -13,6 +13,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.input.BOMInputStream;
+import org.apache.commons.lang3.StringUtils;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -85,7 +86,15 @@ public class IssueRecords implements Iterable<IssueRecord>, Closeable {
 
                 case CUSTOM_FIELD:
 
-                    CustomField customField = new CustomField(fieldSetting.getCustomFieldId(), value);
+                    // 複数選択の場合は文字列のリスト、それ以外は文字列
+                    Object customFiledValue;
+                    if (StringUtils.isNotEmpty(fieldSetting.getMultipleItemSeparator())) {
+                        customFiledValue = StringUtils.split(value, fieldSetting.getMultipleItemSeparator());
+                    } else {
+                        customFiledValue = value;
+                    }
+
+                    CustomField customField = new CustomField(fieldSetting.getCustomFieldId(), customFiledValue);
 
                     if (fieldSetting.isPrimaryKey()) {
                         primaryKey = customField;

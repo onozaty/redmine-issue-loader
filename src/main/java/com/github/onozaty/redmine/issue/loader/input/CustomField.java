@@ -15,11 +15,15 @@ public class CustomField implements PrimaryKey {
 
     private int id;
 
-    private String value;
+    /**
+     * カスタムフィールドの値です。
+     * 複数選択の場合、リストが入ります。
+     */
+    private Object value;
 
     @Override
     public QueryParameter getQueryParameter() {
         // カスタムフィールドの「フィルタとして使用」が有効となっている必要あり
-        return new QueryParameter("cf_" + id, value);
+        return new QueryParameter("cf_" + id, String.valueOf(value));
     }
 }

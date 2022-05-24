@@ -14,6 +14,8 @@ public class FieldSetting {
     private Integer customFieldId;
 
     private boolean isPrimaryKey;
-    
+
+    private String multipleItemSeparator;
+
     private Map<String, String> mappings;
 }

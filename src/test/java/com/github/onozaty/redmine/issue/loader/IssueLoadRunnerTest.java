@@ -51,7 +51,7 @@ public class IssueLoadRunnerTest {
                 assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo("apikey1234567890");
                 assertThat(request.getPath()).isEqualTo("/issues.json");
                 assertThat(request.getBody().readUtf8()).isEqualTo(
-                        "{\"issue\":{\"project_id\":\"1\",\"tracker_id\":\"2\",\"status_id\":\"1\",\"priority_id\":\"2\",\"assigned_to_id\":\"5\",\"category_id\":\"2\",\"fixed_version_id\":\"2\",\"parent_issue_id\":\"\",\"subject\":\"xxx\",\"description\":\"説明1\",\"start_date\":\"2019-02-01\",\"due_date\":\"2019-02-20\",\"done_ratio\":\"10\",\"is_private\":\"true\",\"estimated_hours\":\"2.5\",\"custom_fields\":[{\"id\":1,\"value\":\"A\"},{\"id\":2,\"value\":\"a\"}]}}");
+                        "{\"issue\":{\"project_id\":\"1\",\"tracker_id\":\"2\",\"status_id\":\"1\",\"priority_id\":\"2\",\"assigned_to_id\":\"5\",\"category_id\":\"2\",\"fixed_version_id\":\"2\",\"parent_issue_id\":\"\",\"subject\":\"xxx\",\"description\":\"説明1\",\"start_date\":\"2019-02-01\",\"due_date\":\"2019-02-20\",\"done_ratio\":\"10\",\"is_private\":\"true\",\"estimated_hours\":\"2.5\",\"custom_fields\":[{\"id\":1,\"value\":\"A\"},{\"id\":2,\"value\":\"a\"},{\"id\":3,\"value\":[\"C\"]}]}}");
             }
 
             // 2レコード目
@@ -61,7 +61,7 @@ public class IssueLoadRunnerTest {
                 assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo("apikey1234567890");
                 assertThat(request.getPath()).isEqualTo("/issues.json");
                 assertThat(request.getBody().readUtf8()).isEqualTo(
-                        "{\"issue\":{\"project_id\":\"2\",\"tracker_id\":\"2\",\"status_id\":\"2\",\"priority_id\":\"1\",\"assigned_to_id\":\"\",\"category_id\":\"2\",\"fixed_version_id\":\"\",\"parent_issue_id\":\"\",\"subject\":\"yyy\",\"description\":\"説明2\",\"start_date\":\"2019-03-02\",\"due_date\":\"\",\"done_ratio\":\"\",\"is_private\":\"false\",\"estimated_hours\":\"\",\"custom_fields\":[{\"id\":1,\"value\":\"B\"},{\"id\":2,\"value\":\"b\"}]}}");
+                        "{\"issue\":{\"project_id\":\"2\",\"tracker_id\":\"2\",\"status_id\":\"2\",\"priority_id\":\"1\",\"assigned_to_id\":\"\",\"category_id\":\"2\",\"fixed_version_id\":\"\",\"parent_issue_id\":\"\",\"subject\":\"yyy\",\"description\":\"説明2\",\"start_date\":\"2019-03-02\",\"due_date\":\"\",\"done_ratio\":\"\",\"is_private\":\"false\",\"estimated_hours\":\"\",\"custom_fields\":[{\"id\":1,\"value\":\"B\"},{\"id\":2,\"value\":\"b\"},{\"id\":3,\"value\":[\"A\",\"B\"]}]}}");
             }
 
             // 3レコード目
@@ -71,7 +71,7 @@ public class IssueLoadRunnerTest {
                 assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo("apikey1234567890");
                 assertThat(request.getPath()).isEqualTo("/issues.json");
                 assertThat(request.getBody().readUtf8()).isEqualTo(
-                        "{\"issue\":{\"project_id\":\"1\",\"tracker_id\":\"3\",\"status_id\":\"3\",\"priority_id\":\"3\",\"assigned_to_id\":\"6\",\"category_id\":\"1\",\"fixed_version_id\":\"1\",\"parent_issue_id\":\"1\",\"subject\":\"zzz\",\"description\":\"説明3\",\"start_date\":\"2019-03-12\",\"due_date\":\"2019-10-30\",\"done_ratio\":\"90\",\"is_private\":\"false\",\"estimated_hours\":\"10\",\"custom_fields\":[{\"id\":1,\"value\":\"C\"},{\"id\":2,\"value\":\"c\"}]}}");
+                        "{\"issue\":{\"project_id\":\"1\",\"tracker_id\":\"3\",\"status_id\":\"3\",\"priority_id\":\"3\",\"assigned_to_id\":\"6\",\"category_id\":\"1\",\"fixed_version_id\":\"1\",\"parent_issue_id\":\"1\",\"subject\":\"zzz\",\"description\":\"説明3\",\"start_date\":\"2019-03-12\",\"due_date\":\"2019-10-30\",\"done_ratio\":\"90\",\"is_private\":\"false\",\"estimated_hours\":\"10\",\"custom_fields\":[{\"id\":1,\"value\":\"C\"},{\"id\":2,\"value\":\"c\"},{\"id\":3,\"value\":[]}]}}");
             }
         }
     }
