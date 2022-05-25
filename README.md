@@ -19,7 +19,7 @@ Download the latest jar file (`redmine-issue-loader-x.x.x-all.jar`) from below.
 Execute the application with the following command.
 
 ```
-java -jar redmine-issue-loader-2.2.0-all.jar config.json issues.csv
+java -jar redmine-issue-loader-2.4.0-all.jar config.json issues.csv
 ```
 
 The first argument is the configuration file. The second argument will be the CSV file with the Issue information.
@@ -82,7 +82,8 @@ An example of a configuration file when creating a new issue.
     {
       "headerName": "Field2",
       "type": "CUSTOM_FIELD",
-      "customFieldId": 2
+      "customFieldId": 2,
+      "multipleItemSeparator": ";"
     }
   ]
 }
@@ -92,7 +93,7 @@ An example of a CSV file corresponding to the above configuration file.
 
 ```csv
 Project,Tracker,Subject,Description,Field1,Field2,Field3
-Project A,Bug,xxxx,yyyy,A,B,C
+Project A,Bug,xxxx,yyyy,A,1;2,C
 Project B,Feature,aaaa,bbbb,,,
 Project B,Bug,zzzz,zzzz,1,2,3
 ```
@@ -156,6 +157,7 @@ The contents of each item are as follows.
     * `headerName` : Header name in CSV.
     * `type` : Type. What can be specified as a type is described later.
     * `customFieldId` : ID of the custom field. Set if the type is `CUSTOM_FIELD`.
+    * `multipleItemSeparator` : The character to separate the values. Set for multiple selection custom fields.
     * `primaryKey` : Primary key? Search for issues to be updated using the information of the field set to `true`, and the field` false` will be updated. It is not necessary to specify when mode is `CREATE`.
     * `mappings` : By describing the mapping between the value on CSV and the value on Redmine, contents of CSV can be converted and registered. For example, to convert a project name to a project ID.
 
