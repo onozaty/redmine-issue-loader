@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'com.palantir.git-version' version '0.15.0'
 }
 
 def defaultEncoding = 'UTF-8'
@@ -9,7 +10,9 @@ tasks.withType(AbstractCompile)*.options*.encoding = defaultEncoding
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-version = '2.3.0'
+def gitInfo = versionDetails()
+version = gitInfo.lastTag.substring(1)
+def implementationVersion = version + '.' + gitInfo.gitHash[0..7]
 
 configurations {
     compileOnly {
@@ -41,5 +44,5 @@ dependencies {
 def mainClassName = 'com.github.onozaty.redmine.issue.loader.IssueLoadRunner'
 
 jar {
-    manifest { attributes('Main-Class' : mainClassName, "Implementation-Version": version) }
+    manifest { attributes('Main-Class' : mainClassName, "Implementation-Version": implementationVersion) }
 }
