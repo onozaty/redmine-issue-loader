@@ -1,0 +1,37 @@
+{
+  "mode": "CREATE",
+  "readmineUrl": "http://localhost",
+  "apiKey": "apikey1234567890",
+  "csvEncoding": "UTF-8",
+  "fields": [
+    {
+      "headerName": "Project",
+      "type": "PROJECT_ID",
+      "mappings": {
+        "プロジェクト1": 1,
+        "プロジェクト2": 2
+      }
+    },
+    {
+      "headerName": "Subject",
+      "type": "SUBJECT"
+    },
+    {
+      "headerName": "Field1",
+      "type": "CUSTOM_FIELD",
+      "customFieldId": 1,
+      "multipleItemSeparator": ";",
+      "mappings": {
+        "A": 1,
+        "B": 2,
+        "C": 3
+      }
+    },
+    {
+      "headerName": "Field2",
+      "type": "CUSTOM_FIELD",
+      "customFieldId": 2,
+      "multipleItemSeparator": "\t"
+    }
+  ]
+}

@@ -19,7 +19,7 @@ Download the latest jar file (`redmine-issue-loader-x.x.x-all.jar`) from below.
 Execute the application with the following command.
 
 ```
-java -jar redmine-issue-loader-2.4.0-all.jar config.json issues.csv
+java -jar redmine-issue-loader-2.4.1-all.jar config.json issues.csv
 ```
 
 The first argument is the configuration file. The second argument will be the CSV file with the Issue information.

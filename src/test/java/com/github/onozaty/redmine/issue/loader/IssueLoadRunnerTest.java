@@ -123,6 +123,64 @@ public class IssueLoadRunnerTest {
     }
 
     @Test
+    public void execute_新規作成_複数選択カスタムフィールド() throws URISyntaxException, IOException, InterruptedException {
+
+        try (MockWebServer server = new MockWebServer()) {
+
+            server.enqueue(new MockResponse().setBody("{\"issue\":{\"id\":1}}"));
+            server.enqueue(new MockResponse().setBody("{\"issue\":{\"id\":2}}"));
+            server.enqueue(new MockResponse().setBody("{\"issue\":{\"id\":3}}"));
+
+            server.start();
+
+            Path configPath =
+                    Paths.get(IssueLoadRunnerTest.class.getResource("create-multiple_custom_fields.json").toURI());
+            Config config = Config.of(configPath);
+
+            // Mockに対してリクエスト送信するよう設定
+            config.setReadmineUrl(server.url("/").toString());
+
+            Path csvPath =
+                    Paths.get(IssueLoadRunnerTest.class.getResource("issues-multiple_custom_fields.csv").toURI());
+
+            IssueLoadRunner runner = new IssueLoadRunner(System.out);
+            runner.execute(config, csvPath);
+
+            assertThat(server.getRequestCount()).isEqualTo(3);
+
+            // 1レコード目
+            {
+                RecordedRequest request = server.takeRequest();
+                assertThat(request.getMethod()).isEqualTo("POST");
+                assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo("apikey1234567890");
+                assertThat(request.getPath()).isEqualTo("/issues.json");
+                assertThat(request.getBody().readUtf8()).isEqualTo(
+                        "{\"issue\":{\"project_id\":\"1\",\"subject\":\"xxx\",\"custom_fields\":[{\"id\":1,\"value\":[\"1\",\"2\"]},{\"id\":2,\"value\":[\"a\",\"b\"]}]}}");
+            }
+
+            // 2レコード目
+            {
+                RecordedRequest request = server.takeRequest();
+                assertThat(request.getMethod()).isEqualTo("POST");
+                assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo("apikey1234567890");
+                assertThat(request.getPath()).isEqualTo("/issues.json");
+                assertThat(request.getBody().readUtf8()).isEqualTo(
+                        "{\"issue\":{\"project_id\":\"2\",\"subject\":\"yyy\",\"custom_fields\":[{\"id\":1,\"value\":[\"1\"]},{\"id\":2,\"value\":[\"b\"]}]}}");
+            }
+
+            // 3レコード目
+            {
+                RecordedRequest request = server.takeRequest();
+                assertThat(request.getMethod()).isEqualTo("POST");
+                assertThat(request.getHeader("X-Redmine-API-Key")).isEqualTo("apikey1234567890");
+                assertThat(request.getPath()).isEqualTo("/issues.json");
+                assertThat(request.getBody().readUtf8()).isEqualTo(
+                        "{\"issue\":{\"project_id\":\"1\",\"subject\":\"zzz\",\"custom_fields\":[{\"id\":1,\"value\":[]},{\"id\":2,\"value\":[]}]}}");
+            }
+        }
+    }
+
+    @Test
     public void execute_Basic認証() throws URISyntaxException, IOException, InterruptedException {
 
         try (MockWebServer server = new MockWebServer()) {

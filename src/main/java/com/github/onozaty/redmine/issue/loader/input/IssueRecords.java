@@ -8,6 +8,8 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Iterator;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -75,12 +77,13 @@ public class IssueRecords implements Iterable<IssueRecord>, Closeable {
 
         for (FieldSetting fieldSetting : config.getFields()) {
 
-            String value = convertValue(csvRecord.get(fieldSetting.getHeaderName()), fieldSetting);
+            String value = csvRecord.get(fieldSetting.getHeaderName());
 
             FieldType fieldType = fieldSetting.getType();
             switch (fieldType) {
                 case ISSUE_ID:
 
+                    value = convertValue(value, fieldSetting);
                     primaryKey = new IssueId(Integer.parseInt(value));
                     break;
 
@@ -89,9 +92,13 @@ public class IssueRecords implements Iterable<IssueRecord>, Closeable {
                     // 複数選択の場合は文字列のリスト、それ以外は文字列
                     Object customFiledValue;
                     if (StringUtils.isNotEmpty(fieldSetting.getMultipleItemSeparator())) {
-                        customFiledValue = StringUtils.split(value, fieldSetting.getMultipleItemSeparator());
+
+                        customFiledValue = Stream.of(StringUtils.split(value, fieldSetting.getMultipleItemSeparator()))
+                                .map(v -> convertValue(v, fieldSetting))
+                                .collect(Collectors.toList());
                     } else {
-                        customFiledValue = value;
+
+                        customFiledValue = convertValue(value, fieldSetting);
                     }
 
                     CustomField customField = new CustomField(fieldSetting.getCustomFieldId(), customFiledValue);
@@ -106,6 +113,7 @@ public class IssueRecords implements Iterable<IssueRecord>, Closeable {
 
                 default:
                     // その他の項目は更新対象フィールドとして利用
+                    value = convertValue(value, fieldSetting);
                     targetFieldsBuilder.field(fieldType, value);
                     break;
             }
