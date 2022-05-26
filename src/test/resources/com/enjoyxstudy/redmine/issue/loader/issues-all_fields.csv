@@ -1,4 +1,0 @@
-﻿#,Project,Tracker,Status,Priority,Assignee,Category,Target version,Parent #,Subject,Description,Start date,Due date,% Done,Private,Estimated time,Field1,Field2,Field3
-1,プロジェクト1,トラッカー2,新規,通常,ユーザA,カテゴリ2,v2.0,,xxx,説明1,2019/02/01,2019/02/20,10,true,2.5,A,a,C
-2,プロジェクト2,トラッカー2,進行中,低め,,カテゴリ2,,,yyy,説明2,2019/03/02,,,false,,B,b,B
-3,プロジェクト1,トラッカー3,解決,高め,ユーザB,カテゴリ1,v1.0,1,zzz,説明3,2019/03/12,2019/10/30,90,false,10,C,c,A

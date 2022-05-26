@@ -20,7 +20,7 @@ CSVファイルに記載された情報を読み込んで、Redmineにチケッ�
 入手したjarファイルを指定してアプリケーションを実行します。
 
 ```
-java -jar redmine-issue-loader-2.2.0-all.jar config.json issues.csv
+java -jar redmine-issue-loader-2.4.0-all.jar config.json issues.csv
 ```
 
 第1引数が設定ファイル、第2引数がチケットの情報が書かれたCSVファイルとなります。
@@ -83,7 +83,8 @@ Processing is completed. 3 issues were loaded.
     {
       "headerName": "Field2",
       "type": "CUSTOM_FIELD",
-      "customFieldId": 2
+      "customFieldId": 2,
+      "multipleItemSeparator": ";"
     }
   ]
 }
@@ -93,7 +94,7 @@ Processing is completed. 3 issues were loaded.
 
 ```csv
 Project,Tracker,Subject,Description,Field1,Field2,Field3
-Project A,Bug,xxxx,yyyy,A,B,C
+Project A,Bug,xxxx,yyyy,A,1;2,C
 Project B,Feature,aaaa,bbbb,,,
 Project B,Bug,zzzz,zzzz,1,2,3
 ```
@@ -157,6 +158,7 @@ Project B,Bug,zzzz,zzzz,1,2,3
     * `headerName` : CSV内のヘッダ名。
     * `type` : 種別。種別として指定可能なものは後述。
     * `customFieldId` : カスタムフィールドのID。種別が`CUSTOM_FIELD`の場合に設定する。
+    * `multipleItemSeparator` : 値を分割する文字。複数選択のカスタムフィールドの場合に設定する。
     * `primaryKey` : プライマリーキーか。更新時のみ有効な項目であり、`true`となっているフィールドの情報を使って更新対象のチケットを検索し、`false`となっているフィールドが更新されることとなる。
     * `mappings` : CSV上の値とRedmine上での値のマッピングを記載することによって、CSVの内容を変換して登録できる。たとえば、プロジェクト名をプロジェクトIDに変換する場合など。
 

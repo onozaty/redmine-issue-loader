@@ -1,7 +1,7 @@
 {
   "mode": "UPDATE",
   "readmineUrl": "http://192.168.33.10",
-  "apiKey": "337c5658348090bd67e43c16b03defe45c4d1dfb",
+  "apiKey": "6c6b3511f8ed975364299d6e729cd296f8c2b779",
   "csvEncoding": "UTF-8",
   "fields": [
     {
@@ -104,11 +104,6 @@
       "headerName": "Field1",
       "type": "CUSTOM_FIELD",
       "customFieldId": 1
-    },
-    {
-      "headerName": "Field2",
-      "type": "CUSTOM_FIELD",
-      "customFieldId": 2
     },
     {
       "headerName": "Field3",

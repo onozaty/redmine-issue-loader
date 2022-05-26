@@ -1,63 +1,58 @@
 {
   "mode": "CREATE",
-  "readmineUrl": "http://192.168.33.10",
-  "apiKey": "6c6b3511f8ed975364299d6e729cd296f8c2b779",
+  "readmineUrl": "http://localhost",
+  "apiKey": "apikey1234567890",
   "csvEncoding": "UTF-8",
   "fields": [
     {
       "headerName": "Project",
       "type": "PROJECT_ID",
       "mappings": {
-        "Project A": 1,
-        "Project B": 2
+        "プロジェクト1": 1,
+        "プロジェクト2": 2
       }
     },
     {
       "headerName": "Tracker",
       "type": "TRACKER_ID",
       "mappings": {
-        "Bug": 1,
-        "Feature": 2,
-        "Support": 3
+        "トラッカー1": 1,
+        "トラッカー2": 2,
+        "トラッカー3": 3
       }
     },
     {
       "headerName": "Status",
       "type": "STATUS_ID",
       "mappings": {
-        "New": 1,
-        "In Progress": 2,
-        "Resolved": 3,
-        "Feedback": 4,
-        "Closed": 5,
-        "Rejected": 6
+        "新規": 1,
+        "進行中": 2,
+        "解決": 3
       }
     },
     {
       "headerName": "Priority",
       "type": "PRIORITY_ID",
       "mappings": {
-        "Low": 1,
-        "Normal": 2,
-        "High": 3,
-        "Urgent": 4,
-        "Immediate": 5
+        "低め": 1,
+        "通常": 2,
+        "高め": 3
       }
     },
     {
       "headerName": "Assignee",
       "type": "ASSIGNED_TO_ID",
       "mappings": {
-        "User A": 5,
-        "User B": 6
+        "ユーザA": 5,
+        "ユーザB": 6
       }
     },
     {
       "headerName": "Category",
       "type": "CATEGORY_ID",
       "mappings": {
-        "Category1": 1,
-        "Category2": 2
+        "カテゴリ1": 1,
+        "カテゴリ2": 2
       }
     },
     {
@@ -104,6 +99,17 @@
       "headerName": "Field1",
       "type": "CUSTOM_FIELD",
       "customFieldId": 1
+    },
+    {
+      "headerName": "Field2",
+      "type": "CUSTOM_FIELD",
+      "customFieldId": 2
+    },
+    {
+      "headerName": "Field3",
+      "type": "CUSTOM_FIELD",
+      "customFieldId": 3,
+      "multipleItemSeparator": ";"
     }
   ]
 }

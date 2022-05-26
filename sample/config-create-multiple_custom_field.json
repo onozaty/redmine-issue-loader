@@ -2,10 +2,6 @@
   "mode": "CREATE",
   "readmineUrl": "http://192.168.33.10",
   "apiKey": "6c6b3511f8ed975364299d6e729cd296f8c2b779",
-  "replaceString": {
-    "pattern": "[^\u0000-\uffff]",
-    "replacement": "_"
-  },
   "csvEncoding": "UTF-8",
   "fields": [
     {
@@ -21,8 +17,10 @@
       "type": "SUBJECT"
     },
     {
-      "headerName": "Description",
-      "type": "DESCRIPTION"
+      "headerName": "Field2",
+      "type": "CUSTOM_FIELD",
+      "customFieldId": 2,
+      "multipleItemSeparator": ";"
     }
   ]
 }
