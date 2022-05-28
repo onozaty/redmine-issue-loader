@@ -104,6 +104,15 @@
       "headerName": "Field1",
       "type": "CUSTOM_FIELD",
       "customFieldId": 1
+    },
+    {
+      "headerName": "Watchers",
+      "type": "WATCHER_USER_IDS",
+      "multipleItemSeparator": ";",
+      "mappings": {
+        "User A": 5,
+        "User B": 6
+      }
     }
   ]
 }
