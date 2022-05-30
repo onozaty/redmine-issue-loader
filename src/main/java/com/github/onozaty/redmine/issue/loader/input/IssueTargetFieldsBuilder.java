@@ -9,7 +9,7 @@ public class IssueTargetFieldsBuilder {
 
     private Map<String, Object> updateTargetFields = new LinkedHashMap<>(); // テスト時に順序を保証したいので
 
-    public IssueTargetFieldsBuilder field(FieldType type, String value) {
+    public IssueTargetFieldsBuilder field(FieldType type, Object value) {
 
         updateTargetFields.put(type.getFieldName(), value);
         return this;

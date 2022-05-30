@@ -46,7 +46,9 @@ public enum FieldType {
 
     ESTIMATED_HOURS("estimated_hours"),
 
-    CUSTOM_FIELD("custom_field");
+    CUSTOM_FIELD("custom_field"),
+
+    WATCHER_USER_IDS("watcher_user_ids");
 
     @Getter
     private final String fieldName;

@@ -7,7 +7,10 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -108,6 +111,33 @@ public class IssueRecords implements Iterable<IssueRecord>, Closeable {
                     } else {
                         targetFieldsBuilder.customField(customField);
                     }
+
+                    break;
+
+                case WATCHER_USER_IDS:
+
+                    // ウォッチャーはリスト
+
+                    List<Integer> watcherUserIds;
+
+                    if (StringUtils.isEmpty(value)) {
+
+                        watcherUserIds = Collections.emptyList();
+
+                    } else if (StringUtils.isNotEmpty(fieldSetting.getMultipleItemSeparator())) {
+
+                        watcherUserIds = Stream.of(StringUtils.split(value, fieldSetting.getMultipleItemSeparator()))
+                                .map(v -> convertValue(v, fieldSetting))
+                                .map(Integer::valueOf)
+                                .collect(Collectors.toList());
+
+                    } else {
+
+                        // 区切り文字が無い場合、1ユーザとして登録
+                        watcherUserIds = Arrays.asList(Integer.valueOf(convertValue(value, fieldSetting)));
+                    }
+
+                    targetFieldsBuilder.field(fieldType, watcherUserIds);
 
                     break;
 

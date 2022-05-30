@@ -20,7 +20,7 @@ CSVファイルに記載された情報を読み込んで、Redmineにチケッ�
 入手したjarファイルを指定してアプリケーションを実行します。
 
 ```
-java -jar redmine-issue-loader-2.4.1-all.jar config.json issues.csv
+java -jar redmine-issue-loader-2.5.0-all.jar config.json issues.csv
 ```
 
 第1引数が設定ファイル、第2引数がチケットの情報が書かれたCSVファイルとなります。
@@ -85,6 +85,15 @@ Processing is completed. 3 issues were loaded.
       "type": "CUSTOM_FIELD",
       "customFieldId": 2,
       "multipleItemSeparator": ";"
+    },
+    {
+      "headerName": "Watchers",
+      "type": "WATCHER_USER_IDS",
+      "multipleItemSeparator": ";",
+      "mappings": {
+        "User A": 5,
+        "User B": 6
+      }
     }
   ]
 }
@@ -93,10 +102,10 @@ Processing is completed. 3 issues were loaded.
 上記に対応するCSVファイルの例です。
 
 ```csv
-Project,Tracker,Subject,Description,Field1,Field2,Field3
-Project A,Bug,xxxx,yyyy,A,1;2,C
+Project,Tracker,Subject,Description,Field1,Field2,Watchers
+Project A,Bug,xxxx,yyyy,A,1;2,User A;User B
 Project B,Feature,aaaa,bbbb,,,
-Project B,Bug,zzzz,zzzz,1,2,3
+Project B,Bug,zzzz,zzzz,1,2,User B
 ```
 
 ### 例: 更新時
@@ -158,7 +167,7 @@ Project B,Bug,zzzz,zzzz,1,2,3
     * `headerName` : CSV内のヘッダ名。
     * `type` : 種別。種別として指定可能なものは後述。
     * `customFieldId` : カスタムフィールドのID。種別が`CUSTOM_FIELD`の場合に設定する。
-    * `multipleItemSeparator` : 値を分割する文字。複数選択のカスタムフィールドの場合に設定する。
+    * `multipleItemSeparator` : 値を分割する文字。種別が`WATCHER_USER_IDS`、または`CUSTOM_FIELD`で複数選択の場合に設定する。
     * `primaryKey` : プライマリーキーか。更新時のみ有効な項目であり、`true`となっているフィールドの情報を使って更新対象のチケットを検索し、`false`となっているフィールドが更新されることとなる。
     * `mappings` : CSV上の値とRedmine上での値のマッピングを記載することによって、CSVの内容を変換して登録できる。たとえば、プロジェクト名をプロジェクトIDに変換する場合など。
 
@@ -183,6 +192,7 @@ Project B,Bug,zzzz,zzzz,1,2,3
 |`IS_PRIVATE`|○|○|プライベートか。`true`または`false`を指定。|-|
 |`ESTIMATED_HOURS`|○|○|予定工数。|-|
 |`CUSTOM_FIELD`|○|○|カスタムフィールド。更新時のプライマリーキーとしても利用できる。<br>この種別を指定する際には、`customFieldId`として対応するカスタムフィールドのIDを指定する必要がある。|`/custom_fields.xml`|
+|`WATCHER_USER_IDS`|○|×|ウォッチャーのID。更新には対応していない。|`/users.xml`|
 
 IDとして指定するものは、上記表のID確認URLでIDを確認することができます。
 
@@ -241,3 +251,13 @@ gradlew shadowJar
 ```
 
 `build/libs/redmine-issue-loader-x.x.x-all.jar`という実行ファイルが出来上がります。(`x.x.x`はバージョン番号)
+
+## ライセンス
+
+MIT
+
+## 作者
+
+[onozaty](https://github.com/onozaty)
+
+[スポンサー](https://github.com/sponsors/onozaty) となり、本プロジェクトを維持することに貢献していただける方を募集しています。

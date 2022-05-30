@@ -1,4 +1,4 @@
-﻿#,Project,Tracker,Status,Priority,Assignee,Category,Target version,Parent #,Subject,Description,Start date,Due date,% Done,Private,Estimated time,Field1,Field2,Field3
-1,Project A,Bug,New,Normal,User A,Category1,v1.0,,xxx,aaa,2019/2/1,2019/2/20,10,true,2.5,A,1,A
-2,Project B,Bug,In Progress,Low,User B,,,,yyy,,2019/3/2,,,false,,B,1;2,B
-3,Project A,Support,Closed,High,,Category2,v2.0,1,zzz,ccc,,2019/10/30,90,false,10,C,,C
+﻿#,Project,Tracker,Status,Priority,Assignee,Category,Target version,Parent #,Subject,Description,Start date,Due date,% Done,Private,Estimated time,Field1,Field2,Field3,Watchers
+1,Project A,Bug,New,Normal,User A,Category1,v1.0,,xxx,aaa,2019/2/1,2019/2/20,10,true,2.5,A,1,A,User B
+2,Project B,Bug,In Progress,Low,User B,,,,yyy,,2019/3/2,,,false,,B,1;2,B,
+3,Project A,Support,Closed,High,,Category2,v2.0,1,zzz,ccc,,2019/10/30,90,false,10,C,,C,User A;User B
